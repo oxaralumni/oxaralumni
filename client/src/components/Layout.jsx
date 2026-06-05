@@ -212,14 +212,58 @@ export default function Layout({ children }) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-[#E0E0E0] mt-auto">
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} OXAR - Xavier's School Alumni Association. All rights reserved.</p>
-          <div className="flex space-x-6">
-            <Link to="/about" className="text-sm text-gray-400 hover:text-primary">About</Link>
-            <Link to="/faq" className="text-sm text-gray-400 hover:text-primary">FAQs</Link>
-            <Link to="/contact" className="text-sm text-gray-400 hover:text-primary">Contact</Link>
+      <footer className="w-full bg-primary text-white py-12 mt-auto border-t border-primary-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Col 1 */}
+          <div className="space-y-4">
+            <span className="font-heading font-extrabold text-xl">OXAR Alumni</span>
+            <p className="text-blue-100/80 text-xs leading-relaxed max-w-sm">
+              Connecting Xavier's graduates to build a stronger community and support the next generation of leaders.
+            </p>
+            <div className="flex space-x-4">
+              <a href="#" className="text-blue-100 hover:text-white transition-colors">
+                <span className="text-xs font-semibold">LinkedIn</span>
+              </a>
+              <a href="#" className="text-blue-100 hover:text-white transition-colors">
+                <span className="text-xs font-semibold">Facebook</span>
+              </a>
+              <a href="#" className="text-blue-100 hover:text-white transition-colors">
+                <span className="text-xs font-semibold">Contact</span>
+              </a>
+            </div>
           </div>
+
+          {/* Col 2 */}
+          <div className="flex flex-col space-y-3">
+            <h4 className="font-heading font-bold text-sm">Quick Links</h4>
+            <a href="#" className="text-blue-100/80 hover:text-white text-xs transition-colors">Privacy Policy</a>
+            <a href="#" className="text-blue-100/80 hover:text-white text-xs transition-colors">Terms of Service</a>
+            <Link to="/faq" className="text-blue-100/80 hover:text-white text-xs transition-colors">Contact Us</Link>
+            <a href="https://xaviersrohini.edu.in" target="_blank" rel="noopener noreferrer" className="text-blue-100/80 hover:text-white text-xs transition-colors">School Website</a>
+          </div>
+
+          {/* Col 3 */}
+          <div className="space-y-4">
+            <h4 className="font-heading font-bold text-sm">Newsletter</h4>
+            <p className="text-blue-100/80 text-xs">Stay updated with the latest alumni news and events.</p>
+            <form onSubmit={(e) => { e.preventDefault(); alert('Subscribed!'); }} className="flex">
+              <input
+                type="email"
+                placeholder="Email address"
+                required
+                className="bg-white/10 border border-white/20 text-white rounded-l-md px-3 py-2 text-xs focus:ring-1 focus:ring-white focus:outline-none w-full placeholder:text-white/40"
+              />
+              <button
+                type="submit"
+                className="bg-secondary text-white hover:bg-secondary-dark px-4 py-2 rounded-r-md text-xs font-bold transition-colors"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 pt-6 border-t border-white/10 text-center">
+          <p className="text-blue-100/60 text-xs">&copy; {new Date().getFullYear()} Xavier's Senior Secondary School, Rohini. All rights reserved.</p>
         </div>
       </footer>
     </div>

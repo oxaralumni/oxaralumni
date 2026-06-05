@@ -334,19 +334,20 @@ export default function Join() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">Profile Picture (Drag & Drop or Select)</label>
-                    <div
+                    <label className="block text-xs font-semibold text-gray-600 mb-2">Profile Picture (Drag & Drop or Click to Select)</label>
+                    <label
+                      htmlFor="avatar-upload"
                       onDragOver={handleDragOver}
                       onDrop={handleDrop}
-                      className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
+                      className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer block"
                     >
                       {formData.avatar_url ? (
-                        <div className="text-center space-y-2">
+                        <div className="text-center space-y-2 pointer-events-none">
                           <img src={formData.avatar_url} alt="Avatar Preview" className="w-16 h-16 rounded-full object-cover mx-auto border" />
-                          <p className="text-xxs text-green-600 font-semibold">Upload complete!</p>
+                          <p className="text-xxs text-green-600 font-semibold">Upload complete! Click to change.</p>
                         </div>
                       ) : (
-                        <div className="space-y-2 text-center">
+                        <div className="space-y-2 text-center pointer-events-none">
                           <Upload className="mx-auto h-10 w-10 text-gray-400" />
                           <p className="text-xs text-gray-500">Drag & drop your picture here, or click to upload</p>
                           <p className="text-xxs text-gray-400">PNG, JPG, JPEG under 2MB</p>
@@ -359,10 +360,7 @@ export default function Join() {
                         className="hidden"
                         id="avatar-upload"
                       />
-                      <label htmlFor="avatar-upload" className="mt-2 text-xxs font-bold text-primary hover:text-primary-dark underline cursor-pointer">
-                        Select File
-                      </label>
-                    </div>
+                    </label>
                   </div>
                 </div>
               )}

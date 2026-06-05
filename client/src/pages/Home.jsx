@@ -48,8 +48,13 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary to-[#2a669c] text-white py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative text-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-primary">
+        {/* Background Image overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay pointer-events-none"
+          style={{ backgroundImage: `url('https://xaviersrohini.edu.in/images/About-School.png')` }}
+        />
+        <div className="relative max-w-4xl mx-auto text-center z-10">
           <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6">
             Welcome to the OXAR Alumni Network
           </h1>
