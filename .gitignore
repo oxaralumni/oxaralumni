@@ -1,0 +1,25 @@
+# Dependency directories
+node_modules/
+client/node_modules/
+
+# Environment files
+.env
+client/.env
+client/.env.local
+client/.env.*.local
+
+# Build outputs
+client/dist/
+
+# System / IDE files
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+
+# Python artifacts
+__pycache__/
+*.pyc
+srs_output.txt
+output.txt
+b64.txt
