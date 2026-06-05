@@ -23,3 +23,7 @@ __pycache__/
 srs_output.txt
 output.txt
 b64.txt
+*.docx
+encode.py
+read_docx.py
+
