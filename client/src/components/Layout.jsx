@@ -217,17 +217,17 @@ export default function Layout({ children }) {
           {/* Col 1 */}
           <div className="space-y-4">
             <span className="font-heading font-extrabold text-xl">OXAR Alumni</span>
-            <p className="text-blue-100/80 text-xs leading-relaxed max-w-sm">
+            <p className="text-red-100/80 text-xs leading-relaxed max-w-sm">
               Connecting Xavier's graduates to build a stronger community and support the next generation of leaders.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-blue-100 hover:text-white transition-colors">
+              <a href="#" className="text-red-100 hover:text-white transition-colors">
                 <span className="text-xs font-semibold">LinkedIn</span>
               </a>
-              <a href="#" className="text-blue-100 hover:text-white transition-colors">
+              <a href="#" className="text-red-100 hover:text-white transition-colors">
                 <span className="text-xs font-semibold">Facebook</span>
               </a>
-              <a href="#" className="text-blue-100 hover:text-white transition-colors">
+              <a href="#" className="text-red-100 hover:text-white transition-colors">
                 <span className="text-xs font-semibold">Contact</span>
               </a>
             </div>
@@ -236,16 +236,16 @@ export default function Layout({ children }) {
           {/* Col 2 */}
           <div className="flex flex-col space-y-3">
             <h4 className="font-heading font-bold text-sm">Quick Links</h4>
-            <a href="#" className="text-blue-100/80 hover:text-white text-xs transition-colors">Privacy Policy</a>
-            <a href="#" className="text-blue-100/80 hover:text-white text-xs transition-colors">Terms of Service</a>
-            <Link to="/faq" className="text-blue-100/80 hover:text-white text-xs transition-colors">Contact Us</Link>
-            <a href="https://xaviersrohini.edu.in" target="_blank" rel="noopener noreferrer" className="text-blue-100/80 hover:text-white text-xs transition-colors">School Website</a>
+            <a href="#" className="text-red-100/80 hover:text-white text-xs transition-colors">Privacy Policy</a>
+            <a href="#" className="text-red-100/80 hover:text-white text-xs transition-colors">Terms of Service</a>
+            <Link to="/faq" className="text-red-100/80 hover:text-white text-xs transition-colors">Contact Us</Link>
+            <a href="https://xaviersrohini.edu.in" target="_blank" rel="noopener noreferrer" className="text-red-100/80 hover:text-white text-xs transition-colors">School Website</a>
           </div>
 
           {/* Col 3 */}
           <div className="space-y-4">
             <h4 className="font-heading font-bold text-sm">Newsletter</h4>
-            <p className="text-blue-100/80 text-xs">Stay updated with the latest alumni news and events.</p>
+            <p className="text-red-100/80 text-xs">Stay updated with the latest alumni news and events.</p>
             <form onSubmit={(e) => { e.preventDefault(); alert('Subscribed!'); }} className="flex">
               <input
                 type="email"
@@ -263,7 +263,7 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 pt-6 border-t border-white/10 text-center">
-          <p className="text-blue-100/60 text-xs">&copy; {new Date().getFullYear()} Xavier's Senior Secondary School, Rohini. All rights reserved.</p>
+          <p className="text-red-100/60 text-xs">&copy; {new Date().getFullYear()} Xavier's Senior Secondary School, Rohini. All rights reserved.</p>
         </div>
       </footer>
     </div>

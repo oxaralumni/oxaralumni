@@ -463,9 +463,9 @@ export default function AdminDashboard() {
                     <p className="font-body text-xs text-gray-600 leading-relaxed bg-gray-50 p-3 rounded-md">{q.message}</p>
                     
                     {q.reply ? (
-                      <div className="bg-blue-50 border border-blue-100 p-3 rounded-md">
+                      <div className="bg-red-50 border border-red-100 p-3 rounded-md">
                         <span className="text-xxs font-bold text-primary block mb-1">Official Reply:</span>
-                        <p className="font-body text-xs text-blue-800">{q.reply}</p>
+                        <p className="font-body text-xs text-red-800">{q.reply}</p>
                       </div>
                     ) : (
                       <form

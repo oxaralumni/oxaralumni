@@ -16,7 +16,7 @@ export default function About() {
       <section className="bg-primary text-white py-16 px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h1 className="font-heading font-extrabold text-4xl mb-4">About OXAR Alumni</h1>
-          <p className="font-body text-blue-100 max-w-xl mx-auto">
+          <p className="font-body text-red-100 max-w-xl mx-auto">
             Discover the history, values, mission, and the leadership structure behind the Xavier's School Alumni Association.
           </p>
         </div>

@@ -118,7 +118,7 @@ export default function SocialFeed() {
           </div>
         </form>
       ) : (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center text-blue-700 mb-8">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center text-red-700 mb-8">
           <p className="text-sm font-medium">
             Please log in and wait for admin approval to share posts in the social feed.
           </p>

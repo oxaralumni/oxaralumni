@@ -58,13 +58,13 @@ export default function Home() {
           <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6">
             Welcome to the OXAR Alumni Network
           </h1>
-          <p className="font-body text-lg sm:text-xl text-blue-100 max-w-2xl mx-auto mb-8">
+          <p className="font-body text-lg sm:text-xl text-red-100 max-w-2xl mx-auto mb-8">
             Reconnect with classmates, share milestones, discover upcoming events, and participate in mentoring the next generation.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link
               to="/join"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-white hover:bg-blue-50 shadow-md transition-all duration-250"
+              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-white hover:bg-red-50 shadow-md transition-all duration-250"
             >
               Join the Community
             </Link>
