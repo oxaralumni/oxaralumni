@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { User } from 'lucide-react'
+import { User, Phone } from 'lucide-react'
 import { supabase } from '../supabaseClient'
 
 const INITIAL_COUNCIL = [
-  { name: 'Fr. Packiam M., SJ', designation: 'Director', serial_number: 1 },
-  { name: 'Ankit Khatri', designation: 'President', serial_number: 2 },
-  { name: 'Srijan Girotra', designation: 'Vice President', serial_number: 3 },
-  { name: 'Lavanya Rana', designation: 'Secretary', serial_number: 4 },
-  { name: 'Aarav Rawat', designation: 'Treasurer', serial_number: 5 },
-  { name: 'Manan Kaushik', designation: 'Manager', serial_number: 6 },
-  { name: 'Harshit Gulati', designation: 'Sports Manager', serial_number: 7 },
+  { name: 'Fr. Packiam M., SJ', designation: 'Director', serial_number: 1, phone: 'choose not to display' },
+  { name: 'Ankit Khatri', designation: 'President', serial_number: 2, phone: '+91 70155 28553' },
+  { name: 'Srijan Girotra', designation: 'Vice President', serial_number: 3, phone: '+91 92507 17547' },
+  { name: 'Lavanya Rana', designation: 'Secretary', serial_number: 4, phone: '+91 70116 16284' },
+  { name: 'Aarav Rawat', designation: 'Treasurer', serial_number: 5, phone: '+91 98100 82728' },
+  { name: 'Manan Kaushik', designation: 'Manager', serial_number: 6, phone: '+91 97117 98120' },
+  { name: 'Harshit Gulati', designation: 'Sports Manager', serial_number: 7, phone: 'choose not to display' },
 ]
 
 export default function Council() {
@@ -66,9 +66,18 @@ export default function Council() {
                 {member.designation}
               </p>
               {member.batch && (
-                <p className="font-body text-xs text-gray-500">
+                <p className="font-body text-xs text-gray-500 mb-1">
                   Batch: {member.batch}
                 </p>
+              )}
+              {member.phone && member.phone !== 'choose not to display' && (
+                <a
+                  href={`tel:${member.phone.replace(/[^0-9+]/g, '')}`}
+                  className="font-body text-xs text-gray-600 hover:text-primary transition-colors flex items-center mt-1 bg-gray-50 px-3 py-1 rounded-full border border-gray-100"
+                >
+                  <Phone className="h-3 w-3 mr-1.5 text-secondary" />
+                  <span>{member.phone}</span>
+                </a>
               )}
             </div>
           ))}

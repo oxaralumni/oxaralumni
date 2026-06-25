@@ -17,7 +17,7 @@ export default function AdminDashboard() {
   const [galleryForm, setGalleryForm] = useState({ title: '', image_url: '', category: 'Reunion', year: '', section: 'recent' })
   const [queryReply, setQueryReply] = useState({ id: '', reply: '' })
   
-  const [councilForm, setCouncilForm] = useState({ name: '', designation: '', batch: '', photo_url: '', serial_number: '' })
+  const [councilForm, setCouncilForm] = useState({ name: '', designation: '', batch: '', photo_url: '', serial_number: '', phone: '' })
   const [coordinatorForm, setCoordinatorForm] = useState({ name: '', batch: '', email: '', whatsapp: '', linkedin: '', photo_url: '' })
   const [scholarshipForm, setScholarshipForm] = useState({ title: '', description: '', eligibility: '', amount: '', deadline: '', apply_url: '' })
   const [distinguishedForm, setDistinguishedForm] = useState({ name: '', batch: '', company: '', role: '', achievements: '', photo_url: '' })
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
     })
     if (!error) {
       alert('Council member added successfully!')
-      setCouncilForm({ name: '', designation: '', batch: '', photo_url: '', serial_number: '' })
+      setCouncilForm({ name: '', designation: '', batch: '', photo_url: '', serial_number: '', phone: '' })
       fetchCouncilMembers()
     } else {
       alert(error.message)
@@ -832,7 +832,7 @@ export default function AdminDashboard() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-gray-600 mb-1">Batch Year (Optional)</label>
                   <input
@@ -850,6 +850,16 @@ export default function AdminDashboard() {
                     placeholder="e.g. 1"
                     value={councilForm.serial_number}
                     onChange={(e) => setCouncilForm({ ...councilForm, serial_number: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Phone (Optional)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. +91 ... or choose not to display"
+                    value={councilForm.phone}
+                    onChange={(e) => setCouncilForm({ ...councilForm, phone: e.target.value })}
                     className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
                   />
                 </div>
@@ -909,7 +919,7 @@ export default function AdminDashboard() {
                         )}
                         <div>
                           <p className="text-sm font-bold text-primary">{m.name}</p>
-                          <p className="text-xxs text-gray-500">{m.designation} {m.batch && `| Batch: ${m.batch}`} | Order: {m.serial_number || 'N/A'}</p>
+                          <p className="text-xxs text-gray-500">{m.designation} {m.batch && `| Batch: ${m.batch}`} | Order: {m.serial_number || 'N/A'} {m.phone && `| Phone: ${m.phone}`}</p>
                         </div>
                       </div>
                       <button onClick={() => handleDeleteCouncilMember(m.id)} className="text-red-500 hover:text-red-700 p-1">
