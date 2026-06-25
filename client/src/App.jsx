@@ -12,6 +12,10 @@ import Login from './pages/Login'
 import AdminDashboard from './pages/AdminDashboard'
 import FAQ from './pages/FAQ'
 import Profile from './pages/Profile'
+import Council from './pages/Council'
+import Coordinators from './pages/Coordinators'
+import Scholarships from './pages/Scholarships'
+import DistinguishedAlumni from './pages/DistinguishedAlumni'
 
 export default function App() {
   return (
@@ -29,6 +33,10 @@ export default function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/council" element={<Council />} />
+          <Route path="/coordinators" element={<Coordinators />} />
+          <Route path="/scholarships" element={<Scholarships />} />
+          <Route path="/distinguished" element={<DistinguishedAlumni />} />
         </Routes>
       </Layout>
     </Router>

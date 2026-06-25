@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Users, Calendar, FileText, HelpCircle, Check, X, Shield, Plus, BarChart2, Image, Upload } from 'lucide-react'
+import { Users, Calendar, FileText, HelpCircle, Check, X, Shield, Plus, BarChart2, Image, Upload, Award, GraduationCap, Layers, Briefcase, Trash2 } from 'lucide-react'
 import { supabase } from '../supabaseClient'
 
 export default function AdminDashboard() {
@@ -16,7 +16,19 @@ export default function AdminDashboard() {
   const [newsForm, setNewsForm] = useState({ title: '', category: 'Reunion', content: '', excerpt: '', thumbnail_url: '', pdf_url: '' })
   const [galleryForm, setGalleryForm] = useState({ title: '', image_url: '', category: 'Reunion', year: '' })
   const [queryReply, setQueryReply] = useState({ id: '', reply: '' })
-  const [uploading, setUploading] = useState({ event: false, news: false, gallery: false })
+  
+  const [councilForm, setCouncilForm] = useState({ name: '', designation: '', batch: '', photo_url: '', serial_number: '' })
+  const [coordinatorForm, setCoordinatorForm] = useState({ name: '', batch: '', email: '', whatsapp: '', linkedin: '', photo_url: '' })
+  const [scholarshipForm, setScholarshipForm] = useState({ title: '', description: '', eligibility: '', amount: '', deadline: '', apply_url: '' })
+  const [distinguishedForm, setDistinguishedForm] = useState({ name: '', batch: '', company: '', role: '', achievements: '', photo_url: '' })
+
+  // List States
+  const [councilMembers, setCouncilMembers] = useState([])
+  const [batchCoordinators, setBatchCoordinators] = useState([])
+  const [scholarshipsList, setScholarshipsList] = useState([])
+  const [distinguishedList, setDistinguishedList] = useState([])
+
+  const [uploading, setUploading] = useState({ event: false, news: false, gallery: false, council: false, coordinator: false, distinguished: false })
 
   const handleDragOver = (e) => {
     e.preventDefault()
@@ -73,9 +85,32 @@ export default function AdminDashboard() {
       setNewsForm(prev => ({ ...prev, thumbnail_url: publicUrl }))
     } else if (type === 'gallery') {
       setGalleryForm(prev => ({ ...prev, image_url: publicUrl }))
+    } else if (type === 'council') {
+      setCouncilForm(prev => ({ ...prev, photo_url: publicUrl }))
+    } else if (type === 'coordinator') {
+      setCoordinatorForm(prev => ({ ...prev, photo_url: publicUrl }))
+    } else if (type === 'distinguished') {
+      setDistinguishedForm(prev => ({ ...prev, photo_url: publicUrl }))
     }
 
     setUploading(prev => ({ ...prev, [type]: false }))
+  }
+
+  const fetchCouncilMembers = async () => {
+    const { data } = await supabase.from('council_members').select('*').order('serial_number', { ascending: true })
+    setCouncilMembers(data || [])
+  }
+  const fetchBatchCoordinators = async () => {
+    const { data } = await supabase.from('batch_coordinators').select('*').order('batch', { ascending: false })
+    setBatchCoordinators(data || [])
+  }
+  const fetchScholarships = async () => {
+    const { data } = await supabase.from('scholarships').select('*').order('created_at', { ascending: false })
+    setScholarshipsList(data || [])
+  }
+  const fetchDistinguished = async () => {
+    const { data } = await supabase.from('distinguished_alumni').select('*').order('created_at', { ascending: false })
+    setDistinguishedList(data || [])
   }
 
   const navigate = useNavigate()
@@ -123,7 +158,110 @@ export default function AdminDashboard() {
       queryCount: totalQueries || 0
     })
 
+    // Fetch lists for our new modules
+    await Promise.all([
+      fetchCouncilMembers(),
+      fetchBatchCoordinators(),
+      fetchScholarships(),
+      fetchDistinguished()
+    ])
+
     setLoading(false)
+  }
+
+  const handleCreateCouncilMember = async (e) => {
+    e.preventDefault()
+    const { error } = await supabase.from('council_members').insert({
+      ...councilForm,
+      serial_number: councilForm.serial_number ? parseInt(councilForm.serial_number) : null
+    })
+    if (!error) {
+      alert('Council member added successfully!')
+      setCouncilForm({ name: '', designation: '', batch: '', photo_url: '', serial_number: '' })
+      fetchCouncilMembers()
+    } else {
+      alert(error.message)
+    }
+  }
+
+  const handleDeleteCouncilMember = async (id) => {
+    if (!confirm('Are you sure you want to delete this council member?')) return
+    const { error } = await supabase.from('council_members').delete().eq('id', id)
+    if (!error) {
+      alert('Council member deleted successfully!')
+      fetchCouncilMembers()
+    } else {
+      alert(error.message)
+    }
+  }
+
+  const handleCreateCoordinator = async (e) => {
+    e.preventDefault()
+    const { error } = await supabase.from('batch_coordinators').insert(coordinatorForm)
+    if (!error) {
+      alert('Batch coordinator added successfully!')
+      setCoordinatorForm({ name: '', batch: '', email: '', whatsapp: '', linkedin: '', photo_url: '' })
+      fetchBatchCoordinators()
+    } else {
+      alert(error.message)
+    }
+  }
+
+  const handleDeleteCoordinator = async (id) => {
+    if (!confirm('Are you sure you want to delete this coordinator?')) return
+    const { error } = await supabase.from('batch_coordinators').delete().eq('id', id)
+    if (!error) {
+      alert('Batch coordinator deleted successfully!')
+      fetchBatchCoordinators()
+    } else {
+      alert(error.message)
+    }
+  }
+
+  const handleCreateScholarship = async (e) => {
+    e.preventDefault()
+    const { error } = await supabase.from('scholarships').insert(scholarshipForm)
+    if (!error) {
+      alert('Scholarship created successfully!')
+      setScholarshipForm({ title: '', description: '', eligibility: '', amount: '', deadline: '', apply_url: '' })
+      fetchScholarships()
+    } else {
+      alert(error.message)
+    }
+  }
+
+  const handleDeleteScholarship = async (id) => {
+    if (!confirm('Are you sure you want to delete this scholarship?')) return
+    const { error } = await supabase.from('scholarships').delete().eq('id', id)
+    if (!error) {
+      alert('Scholarship deleted successfully!')
+      fetchScholarships()
+    } else {
+      alert(error.message)
+    }
+  }
+
+  const handleCreateDistinguished = async (e) => {
+    e.preventDefault()
+    const { error } = await supabase.from('distinguished_alumni').insert(distinguishedForm)
+    if (!error) {
+      alert('Distinguished alumnus added successfully!')
+      setDistinguishedForm({ name: '', batch: '', company: '', role: '', achievements: '', photo_url: '' })
+      fetchDistinguished()
+    } else {
+      alert(error.message)
+    }
+  }
+
+  const handleDeleteDistinguished = async (id) => {
+    if (!confirm('Are you sure you want to delete this distinguished alumnus?')) return
+    const { error } = await supabase.from('distinguished_alumni').delete().eq('id', id)
+    if (!error) {
+      alert('Distinguished alumnus deleted successfully!')
+      fetchDistinguished()
+    } else {
+      alert(error.message)
+    }
   }
 
   const handleApproveAlumni = async (id) => {
@@ -247,6 +385,42 @@ export default function AdminDashboard() {
         >
           <HelpCircle className="h-5 w-5" />
           <span>User Queries ({queries.filter(q => q.status === 'pending').length})</span>
+        </button>
+        <button
+          onClick={() => setActiveModule('manage_council')}
+          className={`w-full flex items-center space-x-3 px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
+            activeModule === 'manage_council' ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          <Layers className="h-5 w-5" />
+          <span>Manage Council</span>
+        </button>
+        <button
+          onClick={() => setActiveModule('manage_coordinators')}
+          className={`w-full flex items-center space-x-3 px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
+            activeModule === 'manage_coordinators' ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          <Briefcase className="h-5 w-5" />
+          <span>Manage Coordinators</span>
+        </button>
+        <button
+          onClick={() => setActiveModule('manage_scholarships')}
+          className={`w-full flex items-center space-x-3 px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
+            activeModule === 'manage_scholarships' ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          <GraduationCap className="h-5 w-5" />
+          <span>Manage Scholarships</span>
+        </button>
+        <button
+          onClick={() => setActiveModule('manage_distinguished')}
+          className={`w-full flex items-center space-x-3 px-4 py-2 text-sm font-semibold rounded-md transition-colors ${
+            activeModule === 'manage_distinguished' ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          <Award className="h-5 w-5" />
+          <span>Manage Distinguished</span>
         </button>
       </aside>
 
@@ -613,6 +787,485 @@ export default function AdminDashboard() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Module: Manage Council */}
+        {activeModule === 'manage_council' && (
+          <div className="space-y-6">
+            <h2 className="font-heading font-bold text-xl text-primary border-b pb-3">Manage Council Members</h2>
+            <form onSubmit={handleCreateCouncilMember} className="space-y-4">
+              <h3 className="font-heading font-bold text-sm text-secondary">Add New Council Member</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={councilForm.name}
+                    onChange={(e) => setCouncilForm({ ...councilForm, name: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Designation</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. President, Secretary"
+                    value={councilForm.designation}
+                    onChange={(e) => setCouncilForm({ ...councilForm, designation: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Batch Year (Optional)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 2010"
+                    value={councilForm.batch}
+                    onChange={(e) => setCouncilForm({ ...councilForm, batch: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Serial Number (For Ordering)</label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 1"
+                    value={councilForm.serial_number}
+                    onChange={(e) => setCouncilForm({ ...councilForm, serial_number: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Member Photo (Drag & Drop or Click to Select)</label>
+                <label
+                  htmlFor="council-image-upload"
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'council')}
+                  className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer block"
+                >
+                  {uploading.council ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-primary mx-auto"></div>
+                      <p className="text-xxs text-gray-500 font-semibold">Uploading...</p>
+                    </div>
+                  ) : councilForm.photo_url ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <img src={councilForm.photo_url} alt="Member Preview" className="w-20 h-20 rounded-full object-cover border mx-auto" />
+                      <p className="text-xxs text-green-600 font-semibold">Upload complete! Click to change.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 text-center pointer-events-none">
+                      <Upload className="mx-auto h-8 w-8 text-gray-400" />
+                      <p className="text-xs text-gray-500">Drag & drop photo here, or click to upload</p>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileSelect(e, 'council')}
+                    className="hidden"
+                    id="council-image-upload"
+                  />
+                </label>
+              </div>
+              <button type="submit" className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md text-sm font-semibold">
+                <Plus className="h-4 w-4 mr-2" />
+                <span>Add Member</span>
+              </button>
+            </form>
+
+            <div className="border-t border-gray-100 pt-6">
+              <h3 className="font-heading font-bold text-sm text-primary mb-4">Existing Council Members</h3>
+              {councilMembers.length === 0 ? (
+                <p className="text-xs text-gray-500">No council members added in database. Displaying default static list on frontend.</p>
+              ) : (
+                <div className="space-y-3">
+                  {councilMembers.map((m) => (
+                    <div key={m.id} className="flex justify-between items-center border border-gray-100 p-3 rounded-md">
+                      <div className="flex items-center space-x-3">
+                        {m.photo_url ? (
+                          <img src={m.photo_url} alt="" className="w-10 h-10 rounded-full object-cover" />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-400">?</div>
+                        )}
+                        <div>
+                          <p className="text-sm font-bold text-primary">{m.name}</p>
+                          <p className="text-xxs text-gray-500">{m.designation} {m.batch && `| Batch: ${m.batch}`} | Order: {m.serial_number || 'N/A'}</p>
+                        </div>
+                      </div>
+                      <button onClick={() => handleDeleteCouncilMember(m.id)} className="text-red-500 hover:text-red-700 p-1">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Module: Manage Coordinators */}
+        {activeModule === 'manage_coordinators' && (
+          <div className="space-y-6">
+            <h2 className="font-heading font-bold text-xl text-primary border-b pb-3">Manage Batch Coordinators</h2>
+            <form onSubmit={handleCreateCoordinator} className="space-y-4">
+              <h3 className="font-heading font-bold text-sm text-secondary">Add New Coordinator</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={coordinatorForm.name}
+                    onChange={(e) => setCoordinatorForm({ ...coordinatorForm, name: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Batch Year</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. 2024"
+                    value={coordinatorForm.batch}
+                    onChange={(e) => setCoordinatorForm({ ...coordinatorForm, batch: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Email</label>
+                  <input
+                    type="email"
+                    value={coordinatorForm.email}
+                    onChange={(e) => setCoordinatorForm({ ...coordinatorForm, email: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">WhatsApp / Phone</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. +91 98765..."
+                    value={coordinatorForm.whatsapp}
+                    onChange={(e) => setCoordinatorForm({ ...coordinatorForm, whatsapp: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">LinkedIn URL</label>
+                  <input
+                    type="url"
+                    placeholder="https://..."
+                    value={coordinatorForm.linkedin}
+                    onChange={(e) => setCoordinatorForm({ ...coordinatorForm, linkedin: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Coordinator Photo (Drag & Drop or Click to Select)</label>
+                <label
+                  htmlFor="coordinator-image-upload"
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'coordinator')}
+                  className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer block"
+                >
+                  {uploading.coordinator ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-primary mx-auto"></div>
+                      <p className="text-xxs text-gray-500 font-semibold">Uploading...</p>
+                    </div>
+                  ) : coordinatorForm.photo_url ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <img src={coordinatorForm.photo_url} alt="Coordinator Preview" className="w-16 h-16 rounded-full object-cover border mx-auto" />
+                      <p className="text-xxs text-green-600 font-semibold">Upload complete! Click to change.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 text-center pointer-events-none">
+                      <Upload className="mx-auto h-8 w-8 text-gray-400" />
+                      <p className="text-xs text-gray-500">Drag & drop photo here, or click to upload</p>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileSelect(e, 'coordinator')}
+                    className="hidden"
+                    id="coordinator-image-upload"
+                  />
+                </label>
+              </div>
+              <button type="submit" className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md text-sm font-semibold">
+                <Plus className="h-4 w-4 mr-2" />
+                <span>Add Coordinator</span>
+              </button>
+            </form>
+
+            <div className="border-t border-gray-100 pt-6">
+              <h3 className="font-heading font-bold text-sm text-primary mb-4">Existing Batch Coordinators</h3>
+              {batchCoordinators.length === 0 ? (
+                <p className="text-xs text-gray-500">No coordinators added in database. Displaying default static list on frontend.</p>
+              ) : (
+                <div className="space-y-3">
+                  {batchCoordinators.map((c) => (
+                    <div key={c.id} className="flex justify-between items-center border border-gray-100 p-3 rounded-md">
+                      <div className="flex items-center space-x-3">
+                        {c.photo_url ? (
+                          <img src={c.photo_url} alt="" className="w-10 h-10 rounded-full object-cover" />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-400">?</div>
+                        )}
+                        <div>
+                          <p className="text-sm font-bold text-primary">{c.name}</p>
+                          <p className="text-xxs text-gray-500">Class of {c.batch} | {c.email || 'No email'}</p>
+                        </div>
+                      </div>
+                      <button onClick={() => handleDeleteCoordinator(c.id)} className="text-red-500 hover:text-red-700 p-1">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Module: Manage Scholarships */}
+        {activeModule === 'manage_scholarships' && (
+          <div className="space-y-6">
+            <h2 className="font-heading font-bold text-xl text-primary border-b pb-3">Manage Scholarships</h2>
+            <form onSubmit={handleCreateScholarship} className="space-y-4">
+              <h3 className="font-heading font-bold text-sm text-secondary">Create New Scholarship Opportunity</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Scholarship Title</label>
+                  <input
+                    type="text"
+                    required
+                    value={scholarshipForm.title}
+                    onChange={(e) => setScholarshipForm({ ...scholarshipForm, title: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Amount / Reward Value</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. ₹50,000 / Full Tuition"
+                    value={scholarshipForm.amount}
+                    onChange={(e) => setScholarshipForm({ ...scholarshipForm, amount: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Deadline / Date</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Oct 15, 2026"
+                    value={scholarshipForm.deadline}
+                    onChange={(e) => setScholarshipForm({ ...scholarshipForm, deadline: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Application URL (Optional)</label>
+                  <input
+                    type="url"
+                    placeholder="https://..."
+                    value={scholarshipForm.apply_url}
+                    onChange={(e) => setScholarshipForm({ ...scholarshipForm, apply_url: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Eligibility Criteria</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Science stream graduates, GPA above 3.8"
+                  value={scholarshipForm.eligibility}
+                  onChange={(e) => setScholarshipForm({ ...scholarshipForm, eligibility: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Description</label>
+                <textarea
+                  required
+                  rows="3"
+                  value={scholarshipForm.description}
+                  onChange={(e) => setScholarshipForm({ ...scholarshipForm, description: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md p-3 outline-none text-sm"
+                />
+              </div>
+              <button type="submit" className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md text-sm font-semibold">
+                <Plus className="h-4 w-4 mr-2" />
+                <span>Create Scholarship</span>
+              </button>
+            </form>
+
+            <div className="border-t border-gray-100 pt-6">
+              <h3 className="font-heading font-bold text-sm text-primary mb-4">Existing Scholarships</h3>
+              {scholarshipsList.length === 0 ? (
+                <p className="text-xs text-gray-500">No scholarships available in database.</p>
+              ) : (
+                <div className="space-y-3">
+                  {scholarshipsList.map((s) => (
+                    <div key={s.id} className="flex justify-between items-center border border-gray-100 p-3 rounded-md">
+                      <div>
+                        <p className="text-sm font-bold text-primary">{s.title}</p>
+                        <p className="text-xxs text-gray-500">{s.amount || 'No value specified'} | Deadline: {s.deadline || 'N/A'}</p>
+                      </div>
+                      <button onClick={() => handleDeleteScholarship(s.id)} className="text-red-500 hover:text-red-700 p-1">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Module: Manage Distinguished */}
+        {activeModule === 'manage_distinguished' && (
+          <div className="space-y-6">
+            <h2 className="font-heading font-bold text-xl text-primary border-b pb-3">Manage Distinguished Alumni</h2>
+            <form onSubmit={handleCreateDistinguished} className="space-y-4">
+              <h3 className="font-heading font-bold text-sm text-secondary">Add Distinguished Alumnus</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={distinguishedForm.name}
+                    onChange={(e) => setDistinguishedForm({ ...distinguishedForm, name: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Batch Year</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. 2008"
+                    value={distinguishedForm.batch}
+                    onChange={(e) => setDistinguishedForm({ ...distinguishedForm, batch: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Job Role / Title</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Lead Researcher, CEO"
+                    value={distinguishedForm.role}
+                    onChange={(e) => setDistinguishedForm({ ...distinguishedForm, role: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">Company / Institution</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Google, MIT"
+                    value={distinguishedForm.company}
+                    onChange={(e) => setDistinguishedForm({ ...distinguishedForm, company: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Key Achievements</label>
+                <textarea
+                  required
+                  rows="2"
+                  placeholder="Summarize awards, milestones, or contributions..."
+                  value={distinguishedForm.achievements}
+                  onChange={(e) => setDistinguishedForm({ ...distinguishedForm, achievements: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md p-3 outline-none text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Alumnus Photo (Drag & Drop or Click to Select)</label>
+                <label
+                  htmlFor="distinguished-image-upload"
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'distinguished')}
+                  className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer block"
+                >
+                  {uploading.distinguished ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-primary mx-auto"></div>
+                      <p className="text-xxs text-gray-500 font-semibold">Uploading...</p>
+                    </div>
+                  ) : distinguishedForm.photo_url ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <img src={distinguishedForm.photo_url} alt="Distinguished Preview" className="w-16 h-16 rounded-full object-cover border mx-auto" />
+                      <p className="text-xxs text-green-600 font-semibold">Upload complete! Click to change.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 text-center pointer-events-none">
+                      <Upload className="mx-auto h-8 w-8 text-gray-400" />
+                      <p className="text-xs text-gray-500">Drag & drop photo here, or click to upload</p>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileSelect(e, 'distinguished')}
+                    className="hidden"
+                    id="distinguished-image-upload"
+                  />
+                </label>
+              </div>
+              <button type="submit" className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md text-sm font-semibold">
+                <Plus className="h-4 w-4 mr-2" />
+                <span>Add Alumnus</span>
+              </button>
+            </form>
+
+            <div className="border-t border-gray-100 pt-6">
+              <h3 className="font-heading font-bold text-sm text-primary mb-4">Existing Distinguished Alumni</h3>
+              {distinguishedList.length === 0 ? (
+                <p className="text-xs text-gray-500">No distinguished alumni in database. Displaying default static list on frontend.</p>
+              ) : (
+                <div className="space-y-3">
+                  {distinguishedList.map((d) => (
+                    <div key={d.id} className="flex justify-between items-center border border-gray-100 p-3 rounded-md">
+                      <div className="flex items-center space-x-3">
+                        {d.photo_url ? (
+                          <img src={d.photo_url} alt="" className="w-10 h-10 rounded-full object-cover" />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-400">?</div>
+                        )}
+                        <div>
+                          <p className="text-sm font-bold text-primary">{d.name}</p>
+                          <p className="text-xxs text-gray-500">Class of {d.batch} | {d.role} at {d.company}</p>
+                        </div>
+                      </div>
+                      <button onClick={() => handleDeleteDistinguished(d.id)} className="text-red-500 hover:text-red-700 p-1">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </main>

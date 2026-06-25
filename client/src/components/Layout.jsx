@@ -42,6 +42,10 @@ export default function Layout({ children }) {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
+    { name: 'Council', path: '/council' },
+    { name: 'Batch Coordinators', path: '/coordinators' },
+    { name: 'Distinguished Alumni', path: '/distinguished' },
+    { name: 'Scholarships', path: '/scholarships' },
     { name: 'Alumni Directory', path: '/directory' },
     { name: 'Events', path: '/events' },
     { name: 'News', path: '/news' },
@@ -56,7 +60,7 @@ export default function Layout({ children }) {
     <div className="min-h-screen flex flex-col bg-[#f9f9fd] text-[#1a1c1f]">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-[#E0E0E0] shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link to="/" className="flex-shrink-0 flex items-center">

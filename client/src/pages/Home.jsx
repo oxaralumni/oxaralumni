@@ -1,31 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Calendar, ArrowRight, Award, Briefcase, BookOpen } from 'lucide-react'
+import { Calendar, ArrowRight, Award, BookOpen } from 'lucide-react'
 import { supabase } from '../supabaseClient'
 
 export default function Home() {
-  const [featuredAlumni, setFeaturedAlumni] = useState([])
   const [recentNews, setRecentNews] = useState([])
 
   useEffect(() => {
-    // Fetch some profiles for spotlight
-    supabase.from('profiles')
-      .select('*')
-      .eq('approved', true)
-      .limit(4)
-      .then(({ data }) => {
-        if (data && data.length > 0) {
-          setFeaturedAlumni(data)
-        } else {
-          // Mock profiles if empty
-          setFeaturedAlumni([
-            { id: 1, full_name: 'Dr. Elena Rodriguez', batch: 'Class of 2008', job_title: 'Lead Quantum Researcher', company: 'Global Science Institute', avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
-            { id: 2, full_name: 'Amit Patel', batch: 'Class of 2012', job_title: 'VP of Technology', company: 'EcoScale Innovations', avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' },
-            { id: 3, full_name: 'Sophia Chen', batch: 'Class of 2015', job_title: 'Creative Director', company: 'Studio Pixel', avatar_url: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
-          ])
-        }
-      })
-
     // Fetch dynamic news
     supabase.from('news')
       .select('*')
@@ -78,31 +59,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Alumni Spotlight Carousel */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="text-center mb-12">
-          <h2 className="font-heading font-bold text-3xl text-primary">Alumni Spotlight</h2>
-          <p className="font-body text-gray-500 mt-2">Celebrating achievements and career journeys of our alumni community</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {featuredAlumni.map((alum) => (
-            <div key={alum.id} className="bg-white border border-[#E0E0E0] rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-250 flex flex-col items-center text-center">
-              <img
-                src={alum.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'}
-                alt={alum.full_name}
-                className="w-24 h-24 rounded-full object-cover border-4 border-gray-100 mb-4"
-              />
-              <h3 className="font-heading font-bold text-lg text-primary">{alum.full_name}</h3>
-              <p className="font-body text-xs text-secondary font-semibold mb-2">{alum.batch}</p>
-              <div className="flex items-center text-sm text-gray-500 mb-1">
-                <Briefcase className="h-4 w-4 mr-1 text-gray-400" />
-                <span>{alum.job_title}</span>
-              </div>
-              <p className="text-xs text-gray-400">{alum.company}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* OXAR Introduction / Mission */}
       <section className="bg-white py-16 border-y border-[#E0E0E0] px-4 sm:px-6 lg:px-8">
