@@ -1,14 +1,66 @@
 import React, { useState, useEffect } from 'react'
-import { Send, ThumbsUp, MessageSquare, Trash2, Image, User } from 'lucide-react'
+import { Send, ThumbsUp, MessageSquare, Trash2, Image, User, Upload } from 'lucide-react'
 import { supabase } from '../supabaseClient'
 
 export default function SocialFeed() {
   const [posts, setPosts] = useState([])
   const [newPost, setNewPost] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [uploading, setUploading] = useState(false)
   const [user, setUser] = useState(null)
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  const handleDragOver = (e) => {
+    e.preventDefault()
+  }
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    const file = e.dataTransfer.files[0]
+    if (file) {
+      handleImageUpload(file)
+    }
+  }
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      handleImageUpload(file)
+    }
+  }
+
+  const handleImageUpload = async (file) => {
+    if (!file.type.startsWith('image/')) {
+      alert('Only image files are allowed!')
+      return
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      alert('File size must be under 2MB!')
+      return
+    }
+
+    setUploading(true)
+    const fileExt = file.name.split('.').pop()
+    const fileName = `${Math.random()}.${fileExt}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('gallery')
+      .upload(fileName, file)
+
+    if (uploadError) {
+      alert(uploadError.message)
+      setUploading(false)
+      return
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('gallery')
+      .getPublicUrl(fileName)
+
+    setImageUrl(publicUrl)
+    setUploading(false)
+  }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -95,15 +147,39 @@ export default function SocialFeed() {
                 rows="3"
                 className="w-full border border-gray-300 rounded-md p-3 outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
-              <div className="flex items-center space-x-3">
-                <Image className="h-5 w-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Optional image URL..."
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  className="flex-grow text-xs border border-gray-300 rounded-md px-3 py-1 outline-none focus:ring-1 focus:ring-primary"
-                />
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Post Image (Drag & Drop or Click to Select)</label>
+                <label
+                  htmlFor="post-image-upload"
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                  className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer block"
+                >
+                  {uploading ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-primary mx-auto"></div>
+                      <p className="text-xxs text-gray-500 font-semibold">Uploading image...</p>
+                    </div>
+                  ) : imageUrl ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <img src={imageUrl} alt="Post Preview" className="w-full max-h-48 object-cover rounded-md border mx-auto" />
+                      <p className="text-xxs text-green-600 font-semibold">Upload complete! Click to change.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 text-center pointer-events-none">
+                      <Upload className="mx-auto h-10 w-10 text-gray-400" />
+                      <p className="text-xs text-gray-500">Drag & drop your picture here, or click to upload</p>
+                      <p className="text-xxs text-gray-400">PNG, JPG, JPEG under 2MB</p>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    id="post-image-upload"
+                  />
+                </label>
               </div>
             </div>
           </div>

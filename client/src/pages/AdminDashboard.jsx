@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Users, Calendar, FileText, HelpCircle, Check, X, Shield, Plus, BarChart2, Image } from 'lucide-react'
+import { Users, Calendar, FileText, HelpCircle, Check, X, Shield, Plus, BarChart2, Image, Upload } from 'lucide-react'
 import { supabase } from '../supabaseClient'
 
 export default function AdminDashboard() {
@@ -16,6 +16,67 @@ export default function AdminDashboard() {
   const [newsForm, setNewsForm] = useState({ title: '', category: 'Reunion', content: '', excerpt: '', thumbnail_url: '', pdf_url: '' })
   const [galleryForm, setGalleryForm] = useState({ title: '', image_url: '', category: 'Reunion', year: '' })
   const [queryReply, setQueryReply] = useState({ id: '', reply: '' })
+  const [uploading, setUploading] = useState({ event: false, news: false, gallery: false })
+
+  const handleDragOver = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  const handleDrop = (e, type) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const file = e.dataTransfer.files[0]
+    if (file) {
+      handleImageUpload(file, type)
+    }
+  }
+
+  const handleFileSelect = (e, type) => {
+    const file = e.target.files[0]
+    if (file) {
+      handleImageUpload(file, type)
+    }
+  }
+
+  const handleImageUpload = async (file, type) => {
+    if (!file.type.startsWith('image/')) {
+      alert('Only image files are allowed!')
+      return
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      alert('File size must be under 2MB!')
+      return
+    }
+
+    setUploading(prev => ({ ...prev, [type]: true }))
+    const fileExt = file.name.split('.').pop()
+    const fileName = `${Math.random()}.${fileExt}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('gallery')
+      .upload(fileName, file)
+
+    if (uploadError) {
+      alert(uploadError.message)
+      setUploading(prev => ({ ...prev, [type]: false }))
+      return
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('gallery')
+      .getPublicUrl(fileName)
+
+    if (type === 'event') {
+      setEventForm(prev => ({ ...prev, image_url: publicUrl }))
+    } else if (type === 'news') {
+      setNewsForm(prev => ({ ...prev, thumbnail_url: publicUrl }))
+    } else if (type === 'gallery') {
+      setGalleryForm(prev => ({ ...prev, image_url: publicUrl }))
+    }
+
+    setUploading(prev => ({ ...prev, [type]: false }))
+  }
 
   const navigate = useNavigate()
 
@@ -291,13 +352,33 @@ export default function AdminDashboard() {
               </div>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">Image URL</label>
-              <input
-                type="text"
-                value={eventForm.image_url}
-                onChange={(e) => setEventForm({ ...eventForm, image_url: e.target.value })}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
-              />
+              <label className="block text-xs font-semibold text-gray-600 mb-2">Event Image (Drag & Drop or Click to Select)</label>
+              <label
+                htmlFor="event-image-upload"
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, 'event')}
+                className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer block"
+              >
+                {eventForm.image_url ? (
+                  <div className="text-center space-y-2 pointer-events-none">
+                    <img src={eventForm.image_url} alt="Event Preview" className="w-full max-h-48 object-cover rounded-md border mx-auto" />
+                    <p className="text-xxs text-green-600 font-semibold">Upload complete! Click to change.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2 text-center pointer-events-none">
+                    <Upload className="mx-auto h-10 w-10 text-gray-400" />
+                    <p className="text-xs text-gray-500">Drag & drop your picture here, or click to upload</p>
+                    <p className="text-xxs text-gray-400">PNG, JPG, JPEG under 2MB</p>
+                  </div>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileSelect(e, 'event')}
+                  className="hidden"
+                  id="event-image-upload"
+                />
+              </label>
             </div>
             <button type="submit" className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md text-sm font-semibold">
               <Plus className="h-4 w-4 mr-2" />
@@ -357,13 +438,33 @@ export default function AdminDashboard() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1">Thumbnail Image URL</label>
-                <input
-                  type="text"
-                  value={newsForm.thumbnail_url}
-                  onChange={(e) => setNewsForm({ ...newsForm, thumbnail_url: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
-                />
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Thumbnail Image (Drag & Drop or Click to Select)</label>
+                <label
+                  htmlFor="news-image-upload"
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'news')}
+                  className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer block"
+                >
+                  {newsForm.thumbnail_url ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <img src={newsForm.thumbnail_url} alt="News Preview" className="w-full max-h-48 object-cover rounded-md border mx-auto" />
+                      <p className="text-xxs text-green-600 font-semibold">Upload complete! Click to change.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 text-center pointer-events-none">
+                      <Upload className="mx-auto h-10 w-10 text-gray-400" />
+                      <p className="text-xs text-gray-500">Drag & drop your picture here, or click to upload</p>
+                      <p className="text-xxs text-gray-400">PNG, JPG, JPEG under 2MB</p>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileSelect(e, 'news')}
+                    className="hidden"
+                    id="news-image-upload"
+                  />
+                </label>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1">PDF Newsletter Link (Optional)</label>
@@ -396,16 +497,35 @@ export default function AdminDashboard() {
                 className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
               />
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4 items-end">
               <div className="col-span-2">
-                <label className="block text-xs font-semibold text-gray-600 mb-1">Image / Media URL</label>
-                <input
-                  type="text"
-                  required
-                  value={galleryForm.image_url}
-                  onChange={(e) => setGalleryForm({ ...galleryForm, image_url: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm"
-                />
+                <label className="block text-xs font-semibold text-gray-600 mb-2">Image / Media File (Drag & Drop or Click to Select)</label>
+                <label
+                  htmlFor="gallery-image-upload"
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, 'gallery')}
+                  className="mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer block"
+                >
+                  {galleryForm.image_url ? (
+                    <div className="text-center space-y-2 pointer-events-none">
+                      <img src={galleryForm.image_url} alt="Gallery Preview" className="w-full max-h-48 object-cover rounded-md border mx-auto" />
+                      <p className="text-xxs text-green-600 font-semibold">Upload complete! Click to change.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 text-center pointer-events-none">
+                      <Upload className="mx-auto h-10 w-10 text-gray-400" />
+                      <p className="text-xs text-gray-500">Drag & drop your picture here, or click to upload</p>
+                      <p className="text-xxs text-gray-400">PNG, JPG, JPEG under 2MB</p>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileSelect(e, 'gallery')}
+                    className="hidden"
+                    id="gallery-image-upload"
+                  />
+                </label>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1">Year</label>
