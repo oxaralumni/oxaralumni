@@ -14,7 +14,7 @@ export default function AdminDashboard() {
   // Form States
   const [eventForm, setEventForm] = useState({ title: '', description: '', event_date: '', location: '', image_url: '' })
   const [newsForm, setNewsForm] = useState({ title: '', category: 'Reunion', content: '', excerpt: '', thumbnail_url: '', pdf_url: '' })
-  const [galleryForm, setGalleryForm] = useState({ title: '', image_url: '', category: 'Reunion', year: '' })
+  const [galleryForm, setGalleryForm] = useState({ title: '', image_url: '', category: 'Reunion', year: '', section: 'recent' })
   const [queryReply, setQueryReply] = useState({ id: '', reply: '' })
   
   const [councilForm, setCouncilForm] = useState({ name: '', designation: '', batch: '', photo_url: '', serial_number: '' })
@@ -297,7 +297,7 @@ export default function AdminDashboard() {
     const { error } = await supabase.from('gallery').insert(galleryForm)
     if (!error) {
       alert('Gallery item uploaded successfully!')
-      setGalleryForm({ title: '', image_url: '', category: 'Reunion', year: '' })
+      setGalleryForm({ title: '', image_url: '', category: 'Reunion', year: '', section: 'recent' })
       fetchAdminData()
     }
   }
@@ -713,18 +713,31 @@ export default function AdminDashboard() {
                 />
               </div>
             </div>
-            <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">Category</label>
-              <select
-                value={galleryForm.category}
-                onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value })}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm bg-white"
-              >
-                <option value="Reunion">Reunion</option>
-                <option value="Sports">Sports</option>
-                <option value="Campus">Campus</option>
-                <option value="Ceremony">Ceremony</option>
-              </select>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Category</label>
+                <select
+                  value={galleryForm.category}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm bg-white"
+                >
+                  <option value="Reunion">Reunion</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Campus">Campus</option>
+                  <option value="Ceremony">Ceremony</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-600 mb-1">Gallery Section</label>
+                <select
+                  value={galleryForm.section}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, section: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none text-sm bg-white"
+                >
+                  <option value="recent">Recent Activities</option>
+                  <option value="memories_archives">Memories & Archives</option>
+                </select>
+              </div>
             </div>
             <button type="submit" className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md text-sm font-semibold">
               <Plus className="h-4 w-4 mr-2" />

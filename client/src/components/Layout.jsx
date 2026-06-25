@@ -46,7 +46,9 @@ export default function Layout({ children }) {
     { name: 'Batch Coordinators', path: '/coordinators' },
     { name: 'Distinguished Alumni', path: '/distinguished' },
     { name: 'Scholarships', path: '/scholarships' },
-    { name: 'Alumni Directory', path: '/directory' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'Careers & Jobs', path: '/careers' },
+    { name: 'Business Directory', path: '/business-directory' },
     { name: 'Events', path: '/events' },
     { name: 'News', path: '/news' },
   ]
@@ -60,18 +62,18 @@ export default function Layout({ children }) {
     <div className="min-h-screen flex flex-col bg-[#f9f9fd] text-[#1a1c1f]">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-[#E0E0E0] shadow-sm">
-        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-full mx-auto px-2 sm:px-4 lg:px-6">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link to="/" className="flex-shrink-0 flex items-center">
-                <span className="font-heading font-extrabold text-xl text-primary tracking-tight">OXAR Alumni</span>
+                <span className="font-heading font-extrabold text-lg text-primary tracking-tight mr-1 xl:mr-2">OXAR Alumni</span>
               </Link>
-              <nav className="hidden md:ml-4 lg:ml-6 md:flex md:space-x-3 lg:space-x-4">
+              <nav className="hidden lg:flex lg:ml-2 space-x-1 xl:space-x-2">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`inline-flex items-center px-1 pt-1 text-xs font-semibold font-body border-b-2 transition-all duration-200 ${
+                    className={`inline-flex items-center px-1 pt-1 text-[11px] xl:text-xs font-semibold font-body border-b-2 transition-all duration-200 ${
                       location.pathname === link.path
                         ? 'border-primary text-primary'
                         : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
@@ -84,7 +86,7 @@ export default function Layout({ children }) {
             </div>
 
             {/* Right side CTA / Auth Info */}
-            <div className="hidden md:flex md:items-center md:space-x-4">
+            <div className="hidden lg:flex lg:items-center lg:space-x-4">
               {user ? (
                 <div className="flex items-center space-x-4">
                   {profile?.is_admin && (
@@ -134,7 +136,7 @@ export default function Layout({ children }) {
             </div>
 
             {/* Mobile Hamburger Button */}
-            <div className="flex items-center md:hidden">
+            <div className="flex items-center lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100 focus:outline-none"
@@ -147,7 +149,7 @@ export default function Layout({ children }) {
 
         {/* Mobile Navigation Drawer */}
         {isOpen && (
-          <div className="md:hidden border-t border-[#E0E0E0] bg-white px-2 pt-2 pb-3 space-y-1">
+          <div className="lg:hidden border-t border-[#E0E0E0] bg-white px-2 pt-2 pb-3 space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.name}

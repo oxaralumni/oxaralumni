@@ -16,6 +16,9 @@ import Council from './pages/Council'
 import Coordinators from './pages/Coordinators'
 import Scholarships from './pages/Scholarships'
 import DistinguishedAlumni from './pages/DistinguishedAlumni'
+import Gallery from './pages/Gallery'
+import Careers from './pages/Careers'
+import BusinessDirectory from './pages/BusinessDirectory'
 
 export default function App() {
   return (
@@ -37,6 +40,9 @@ export default function App() {
           <Route path="/coordinators" element={<Coordinators />} />
           <Route path="/scholarships" element={<Scholarships />} />
           <Route path="/distinguished" element={<DistinguishedAlumni />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/business-directory" element={<BusinessDirectory />} />
         </Routes>
       </Layout>
     </Router>
