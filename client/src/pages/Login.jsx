@@ -75,7 +75,7 @@ export default function Login() {
                 <Key className="h-3 w-3 mr-1 text-gray-400" />
                 <span>Password</span>
               </span>
-              <a href="#" className="text-xxs text-secondary hover:underline">Forgot password?</a>
+              <Link to="/forgot-password" className="text-xxs text-secondary hover:underline">Forgot password?</Link>
             </label>
             <input
               type="password"

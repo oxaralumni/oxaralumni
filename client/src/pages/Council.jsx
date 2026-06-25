@@ -10,12 +10,6 @@ const INITIAL_COUNCIL = [
   { name: 'Aarav Rawat', designation: 'Treasurer', serial_number: 5 },
   { name: 'Manan Kaushik', designation: 'Manager', serial_number: 6 },
   { name: 'Harshit Gulati', designation: 'Sports Manager', serial_number: 7 },
-  { name: 'Priyansh Charan Sinha', designation: 'Executive Member', serial_number: 8 },
-  { name: 'Aarushi', designation: 'Executive Member', serial_number: 9 },
-  { name: 'Gunn Narula', designation: 'Executive Member', serial_number: 10 },
-  { name: 'Madhav Dhameja', designation: 'Executive Member', serial_number: 11 },
-  { name: 'Divyam Nagar', designation: 'Executive Member', serial_number: 12 },
-  { name: 'Aditya Massey', designation: 'Executive Member', serial_number: 13 },
 ]
 
 export default function Council() {

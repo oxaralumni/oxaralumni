@@ -19,6 +19,8 @@ import DistinguishedAlumni from './pages/DistinguishedAlumni'
 import Gallery from './pages/Gallery'
 import Careers from './pages/Careers'
 import BusinessDirectory from './pages/BusinessDirectory'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
 export default function App() {
   return (
@@ -43,6 +45,8 @@ export default function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/business-directory" element={<BusinessDirectory />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
       </Layout>
     </Router>
