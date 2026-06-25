@@ -66,12 +66,12 @@ export default function Layout({ children }) {
               <Link to="/" className="flex-shrink-0 flex items-center">
                 <span className="font-heading font-extrabold text-xl text-primary tracking-tight">OXAR Alumni</span>
               </Link>
-              <nav className="hidden md:ml-8 md:flex md:space-x-6">
+              <nav className="hidden md:ml-4 lg:ml-6 md:flex md:space-x-3 lg:space-x-4">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`inline-flex items-center px-1 pt-1 text-sm font-medium font-body border-b-2 transition-all duration-200 ${
+                    className={`inline-flex items-center px-1 pt-1 text-xs font-semibold font-body border-b-2 transition-all duration-200 ${
                       location.pathname === link.path
                         ? 'border-primary text-primary'
                         : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
