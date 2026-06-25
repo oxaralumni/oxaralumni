@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
@@ -23,6 +23,13 @@ import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 
 export default function App() {
+  useEffect(() => {
+    // Detect if recovery/access token is in hash (e.g. redirected from password recovery email)
+    const hash = window.location.hash
+    if (hash && (hash.includes('access_token=') || hash.includes('type=recovery'))) {
+      window.location.href = `${window.location.origin}/reset-password${window.location.hash}`
+    }
+  }, [])
   return (
     <Router>
       <Layout>
