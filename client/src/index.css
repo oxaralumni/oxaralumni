@@ -3,10 +3,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #4A78B0;
-  --color-primary-dark: #315A8A;
-  --color-secondary: #6FA8DC;
-  --color-secondary-dark: #4D82B8;
+  --color-primary: #0071E3;
+  --color-primary-dark: #0066CC;
+  --color-secondary: #F5F5F7;
+  --color-secondary-dark: #E8E8ED;
   
   --font-heading: "Plus Jakarta Sans", sans-serif;
   --font-body: Inter, sans-serif;
