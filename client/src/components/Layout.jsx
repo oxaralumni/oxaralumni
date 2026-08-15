@@ -66,7 +66,7 @@ export default function Layout({ children }) {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link to="/" className="flex-shrink-0 flex items-center">
-                <span className="font-heading font-extrabold text-lg text-primary tracking-tight mr-1 xl:mr-2">OXAR Alumni</span>
+                <span className="font-heading font-extrabold text-lg text-primary tracking-tight mr-1 xl:mr-2">OXAR</span>
               </Link>
               <nav className="hidden lg:flex lg:ml-2 space-x-1 xl:space-x-2">
                 {navLinks.map((link) => (
