@@ -243,7 +243,7 @@ export default function Layout({ children }) {
               Connecting Xavier's graduates to build a stronger community and support the next generation of leaders.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-red-100 hover:text-white transition-colors">
+              <a href="https://www.linkedin.com/school/st-xavier-s-school-rohini/?viewAsMember=true" className="text-red-100 hover:text-white transition-colors">
                 <span className="text-xs font-semibold">LinkedIn</span>
               </a>
               <a href="#" className="text-red-100 hover:text-white transition-colors">
