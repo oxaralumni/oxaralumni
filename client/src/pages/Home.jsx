@@ -96,15 +96,16 @@ export default function Home() {
         </div>
       </section>
 
-     {/* OXAR HISTORY */}
-<section className="bg-[#FCFBF7] py-20 md:py-28 overflow-hidden">
+  {/* OXAR HISTORY */}
+<section className="relative overflow-hidden bg-[#FCFBF7] py-20 md:py-28">
 
-  {/* Section heading */}
+  {/* Section Heading */}
   <div className="mx-auto max-w-7xl px-6 text-center">
-    <h2 className="font-heading text-3xl font-bold text-[#173F5F] md:text-4xl lg:text-5xl">
+    <h2 className="font-heading text-3xl font-bold tracking-tight text-[#173F5F] md:text-4xl lg:text-5xl">
       Learn more about OXAR History
     </h2>
 
+    {/* Gold Divider */}
     <div className="mx-auto mt-5 flex items-center justify-center gap-3">
       <span className="h-px w-20 bg-[#B89A5A]" />
       <span className="h-2 w-2 rotate-45 bg-[#B89A5A]" />
@@ -113,60 +114,105 @@ export default function Home() {
   </div>
 
 
-  {/* Main composition */}
+  {/* Main Editorial Composition */}
   <div className="relative mx-auto mt-12 max-w-[1400px] px-6">
 
-    {/* BLUE BACKGROUND PANEL
-        This deliberately extends beyond the image on the left */}
+    {/* Navy Background Panel
+        Extends behind and beyond the image */}
     <div
       className="
         absolute
+        bottom-0
         left-0
         right-0
         top-[22%]
-        bottom-0
-        bg-[#173F5F]
         rounded-[18px]
+        bg-[#173F5F]
       "
     />
 
 
-    {/* Content wrapper */}
+    {/* Content Layer */}
     <div className="relative z-10">
 
-      {/* Image */}
+
+      {/* =========================================
+          IMAGE
+          ========================================= */}
+      <div
+        className="
+          relative
+          ml-[5%]
+          h-[430px]
+          w-[90%]
+          overflow-hidden
+          rounded-t-[16px]
+          md:h-[540px]
+          lg:h-[600px]
+        "
+      >
+
+        <img
+          src="/IMG_8654.HEIC"
+          alt="OXAR history and heritage"
+          className="
+            absolute
+            inset-0
+            h-full
+            w-full
+            object-cover
+            object-center
+          "
+        />
+
+        {/* Image Overlay */}
+        <div
+          className="
+            absolute
+            inset-0
+            bg-gradient-to-r
+            from-[#102F48]/65
+            via-[#173F5F]/20
+            to-transparent
+          "
+        />
+
+        {/* Bottom Image Fade */}
+        <div
+          className="
+            absolute
+            inset-x-0
+            bottom-0
+            h-48
+            bg-gradient-to-t
+            from-[#173F5F]/70
+            via-[#173F5F]/20
+            to-transparent
+          "
+        />
+
+      </div>
+
+
+      {/* =========================================
+          TEXT CONTENT
+          ========================================= */}
       <div
         className="
           relative
           ml-[5%]
           w-[90%]
-          h-[430px]
-          overflow-hidden
-          rounded-t-[16px]
-          md:h-[540px]
+          px-8
+          pb-16
+          md:px-14
+          md:pb-20
+          lg:px-20
+          lg:pb-24
         "
       >
 
-        <img
-  src="https://raw.githubusercontent.com/oxaralumni/oxaralumni/main/client/public/IMG_8654.HEIC"
-  alt="OXAR history"
-  className="h-full w-full object-cover"
-/>
-        />
-
-        {/* Dark image gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#102F48]/65 via-[#173F5F]/20 to-transparent" />
-
-        {/* Bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#173F5F]/60 to-transparent" />
-
-      </div>
-
-
-      {/* TEXT CONTENT */}
-      <div className="relative ml-[5%] w-[90%] px-8 pb-16 md:px-14 lg:px-20">
-
-        {/* Heading overlaps image / blue panel */}
+        {/* Main Heading
+            Overlaps the image and navy panel */}
         <h3
           className="
             relative
@@ -178,9 +224,10 @@ export default function Home() {
             leading-[0.92]
             tracking-[-0.035em]
             text-white
-            md:-mt-[95px]
+            md:-mt-[100px]
             md:text-6xl
-            lg:text-7xl
+            lg:-mt-[115px]
+            lg:text-8xl
           "
         >
           Our Xavierian
@@ -189,7 +236,7 @@ export default function Home() {
         </h3>
 
 
-        {/* Gold line */}
+        {/* Gold Accent Line */}
         <div className="mt-8 h-[2px] w-24 bg-[#B89A5A]" />
 
 
@@ -250,8 +297,11 @@ export default function Home() {
   </div>
 
 
-  {/* Bottom ornament */}
+  {/* =========================================
+      BOTTOM ORNAMENT
+      ========================================= */}
   <div className="mx-auto mt-12 flex max-w-5xl items-center justify-center gap-4 px-6">
+
     <span className="h-px flex-1 bg-[#D8C7A0]" />
 
     <span className="text-xl text-[#B89A5A]">
@@ -259,6 +309,7 @@ export default function Home() {
     </span>
 
     <span className="h-px flex-1 bg-[#D8C7A0]" />
+
   </div>
 
 </section>
