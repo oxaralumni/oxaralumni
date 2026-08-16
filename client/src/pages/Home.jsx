@@ -34,7 +34,7 @@ export default function Home() {
   <div
     className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay pointer-events-none"
     style={{
-      backgroundImage: `url('https://xaviersrohini.edu.in/images/About-School.png')`
+      backgroundImage: `url('https://static.vecteezy.com/system/resources/thumbnails/074/380/722/small/graduation-cap-academic-achievement-and-success-photo.jpg')`
     }}
   />
 
