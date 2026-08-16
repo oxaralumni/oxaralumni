@@ -4,7 +4,6 @@ import { ArrowRight, Award, BookOpen } from 'lucide-react'
 import { supabase } from '../supabaseClient'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
-
 export default function Home() {
   const [recentNews, setRecentNews] = useState([])
 
@@ -19,13 +18,11 @@ export default function Home() {
     offset: ['start start', 'end end'],
   })
 
-  // Text moves upward while the image remains visually fixed
   const textY = useTransform(
     scrollYProgress,
     [0, 1],
     ['120px', '-220px']
   )
-
 
   // =========================================================
   // FETCH NEWS
@@ -78,7 +75,6 @@ export default function Home() {
       })
   }, [])
 
-
   return (
     <div className="flex flex-col">
 
@@ -97,7 +93,6 @@ export default function Home() {
         />
 
         <div className="relative z-10 mx-auto max-w-7xl">
-
           <div className="max-w-3xl text-left">
 
             <h1 className="mb-6 font-heading text-4xl font-extrabold leading-none tracking-tight sm:text-5xl lg:text-6xl">
@@ -119,7 +114,6 @@ export default function Home() {
             </p>
 
           </div>
-
         </div>
 
       </section>
@@ -214,11 +208,8 @@ export default function Home() {
       {/* =====================================================
           OXAR HERITAGE
           
-          FIXED IMAGE
-          +
-          MOVING TYPOGRAPHY
-          +
-          IMAGE INSIDE LETTERS
+          Fixed image + moving typography
+          Image appears inside the letters
           ===================================================== */}
 
       <section
@@ -229,16 +220,12 @@ export default function Home() {
         {/* Scroll distance */}
         <div className="relative h-[220vh]">
 
-          {/* Sticky visual */}
+          {/* Sticky viewport */}
           <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-[#FCFBF7]">
-
-            {/* =================================================
-                IMAGE-FILLED TYPOGRAPHY
-                ================================================= */}
 
             <div className="relative z-10 flex w-full flex-col items-center justify-center">
 
-              {/* Section label */}
+              {/* Section Label */}
 
               <div className="mb-10 text-center">
 
@@ -254,10 +241,7 @@ export default function Home() {
 
 
               {/* =================================================
-                  MOVING TEXT
-                  
-                  The actual photograph is loaded through
-                  the .image-text CSS class.
+                  MOVING IMAGE-FILLED TYPOGRAPHY
                   ================================================= */}
 
               <div className="w-full overflow-hidden px-2">
@@ -296,7 +280,7 @@ export default function Home() {
 
 
               {/* =================================================
-                  DESCRIPTION
+                  DESCRIPTION + CTA
                   ================================================= */}
 
               <div className="mt-12 max-w-xl px-6 text-center">
@@ -307,8 +291,6 @@ export default function Home() {
                   across generations.
                 </p>
 
-
-                {/* CTA */}
 
                 <Link
                   to="/about"
@@ -384,17 +366,17 @@ export default function Home() {
             to="/news"
             className="flex items-center font-body text-sm font-semibold text-secondary transition-colors hover:text-secondary-dark"
           >
-
             <span>
               View All News
             </span>
 
             <ArrowRight className="ml-1 h-4 w-4" />
-
           </Link>
 
         </div>
 
+
+        {/* News Cards */}
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
 
