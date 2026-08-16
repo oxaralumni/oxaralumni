@@ -96,6 +96,100 @@ export default function Home() {
         </div>
       </section>
 
+      {/* OXAR History Feature */}
+<section className="relative overflow-hidden bg-[#FCFBF7] py-20 md:py-28">
+
+  {/* Heading */}
+  <div className="mx-auto mb-12 max-w-7xl px-6 text-center">
+    <h2 className="font-heading text-3xl font-bold tracking-tight text-[#173F5F] md:text-4xl lg:text-5xl">
+      Learn more about OXAR History
+    </h2>
+
+    <div className="mx-auto mt-5 flex items-center justify-center gap-3">
+      <span className="h-px w-20 bg-[#B89A5A]" />
+      <span className="h-2 w-2 rotate-45 bg-[#B89A5A]" />
+      <span className="h-px w-20 bg-[#B89A5A]" />
+    </div>
+  </div>
+
+  {/* History Card */}
+  <div className="mx-auto max-w-7xl px-6">
+
+    <div className="relative overflow-hidden rounded-[18px] shadow-[0_20px_60px_rgba(23,63,95,0.14)]">
+
+      {/* Vertical Motto */}
+      <div className="absolute left-0 top-0 z-20 hidden h-full w-14 items-center justify-center bg-[#FCFBF7] lg:flex">
+        <span
+          className="whitespace-nowrap text-[10px] font-semibold tracking-[0.28em] text-[#173F5F]"
+          style={{ writingMode: "vertical-rl" }}
+        >
+          A LIFELONG BOND. ONE FAMILY. ONE FUTURE.
+        </span>
+      </div>
+
+      {/* Historical Image */}
+      <div className="relative h-[420px] overflow-hidden md:h-[540px] lg:ml-14">
+
+        <img
+          src="/images/oxar-history.jpg"
+          alt="OXAR history"
+          className="h-full w-full object-cover object-center"
+        />
+
+        {/* Image overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#102F48]/70 via-[#173F5F]/20 to-transparent" />
+
+        {/* Bottom fade */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#173F5F]/50 to-transparent" />
+
+      </div>
+
+      {/* Navy Content */}
+      <div className="relative bg-[#173F5F] px-8 pb-12 pt-8 md:px-14 md:pb-16 lg:px-20 lg:pt-0">
+
+        {/* Title */}
+        <h3 className="-mt-2 max-w-4xl font-heading text-5xl font-bold leading-[0.92] tracking-[-0.035em] text-white md:text-6xl lg:-mt-8 lg:text-7xl">
+          Our Xavierian
+          <br />
+          Heritage
+        </h3>
+
+        {/* Gold Accent */}
+        <div className="mt-7 h-[2px] w-24 bg-[#B89A5A]" />
+
+        {/* Description */}
+        <p className="mt-7 max-w-3xl font-body text-lg leading-relaxed text-[#E6EEF2] md:text-xl">
+          From the classrooms where friendships began to the memories
+          that continue to connect generations, OXAR carries forward
+          the spirit of the Xavierian community.
+        </p>
+
+        {/* CTA */}
+        <Link
+          to="/about"
+          className="group mt-9 inline-flex items-center gap-4 font-body text-sm font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:text-[#B89A5A]"
+        >
+          Discover our history
+
+          <ArrowRight
+            className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-2"
+          />
+        </Link>
+
+      </div>
+
+    </div>
+  </div>
+
+  {/* Bottom Ornament */}
+  <div className="mx-auto mt-12 flex max-w-5xl items-center justify-center gap-4 px-6">
+    <span className="h-px flex-1 bg-[#D8C7A0]" />
+    <span className="text-xl text-[#B89A5A]">✦</span>
+    <span className="h-px flex-1 bg-[#D8C7A0]" />
+  </div>
+
+</section>
+
       {/* Latest News / Grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="flex justify-between items-end mb-12">
