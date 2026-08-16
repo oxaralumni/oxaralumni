@@ -66,24 +66,27 @@ export default function Layout({ children }) {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link to="/" className="flex-shrink-0 flex items-center">
-                <span className="font-heading font-extrabold text-lg text-primary tracking-tight mr-1 xl:mr-2">OXAR</span>
+                <span className="font-title font-extrabold text-lg text-primary tracking-tight mr-1 xl:mr-2">OXAR</span>
               </Link>
-           <nav className="hidden lg:flex lg:ml-auto items-center space-x-2">
-  {navLinks.map((link) => (
-    <Link
-      key={link.name}
-      to={link.path}
-      className={`inline-flex items-right px-2 py-2 text-sm font-semibold font-body border-b-2 transition-all duration-200 ${
-        location.pathname === link.path
-          ? 'border-primary text-primary'
-          : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
-      }`}
-    >
-      {link.name}
-    </Link>
-  ))}
-</nav>
-            </div>
+           <div className="flex items-center w-full">
+            {/* Logo */}
+          
+            <nav className="hidden lg:flex ml-auto items-center space-x-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`inline-flex items-center px-2 py-2 text-sm font-semibold font-body border-b-2 transition-all duration-200 ${
+                    location.pathname === link.path
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
             {/* Right side CTA / Auth Info */}
             <div className="hidden lg:flex lg:items-center lg:space-x-4">
