@@ -67,7 +67,7 @@ export default function Layout({ children }) {
   {/* OXAR Logo - Far Left */}
   <div className="flex items-center">
     <Link to="/" className="flex-shrink-0 flex items-center">
-      <span className="font-title font-extrabold text-lg text-primary tracking-tight">
+      <span className="font-title font-extrabold text-2xl text-primary tracking-tight">
         OXAR
       </span>
     </Link>
