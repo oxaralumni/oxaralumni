@@ -19,7 +19,7 @@ export default function Home() {
     offset: ['start start', 'end end'],
   })
 
-  // Typography moves upward while the image remains fixed
+  // Text moves upward while the image remains visually fixed
   const textY = useTransform(
     scrollYProgress,
     [0, 1],
@@ -41,7 +41,6 @@ export default function Home() {
         if (data && data.length > 0) {
           setRecentNews(data)
         } else {
-          // Mock news
           setRecentNews([
             {
               id: 1,
@@ -83,14 +82,12 @@ export default function Home() {
   return (
     <div className="flex flex-col">
 
-
       {/* =====================================================
           HERO SECTION
           ===================================================== */}
 
       <section className="relative overflow-hidden bg-primary px-4 py-24 text-white sm:px-6 lg:px-8">
 
-        {/* Background Image */}
         <div
           className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay"
           style={{
@@ -108,7 +105,6 @@ export default function Home() {
             </h1>
 
             <p className="mb-8 font-body text-lg leading-relaxed text-white/90 sm:text-xl">
-
               <span className="block">
                 Years pass. Faces change. Memories remain.
               </span>
@@ -116,7 +112,6 @@ export default function Home() {
               <span className="block">
                 Some places never stop feeling like home.
               </span>
-
             </p>
 
             <p className="font-body text-lg italic text-white/90 sm:text-xl">
@@ -138,7 +133,6 @@ export default function Home() {
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
 
-          {/* Mission Text */}
           <div>
 
             <h2 className="mb-6 font-heading text-3xl font-bold text-primary">
@@ -165,13 +159,11 @@ export default function Home() {
                 to="/about"
                 className="inline-flex items-center font-body font-semibold text-secondary transition-colors hover:text-secondary-dark"
               >
-
                 <span>
                   Learn more about OXAR history
                 </span>
 
                 <ArrowRight className="ml-1 h-4 w-4" />
-
               </Link>
 
             </div>
@@ -180,6 +172,7 @@ export default function Home() {
 
 
           {/* Statistics */}
+
           <div className="grid grid-cols-2 gap-4">
 
             <div className="flex flex-col items-center justify-center rounded-lg border border-gray-100 bg-[#f9f9fd] p-6 text-center">
@@ -221,8 +214,11 @@ export default function Home() {
       {/* =====================================================
           OXAR HERITAGE
           
-          Fixed photograph + moving typography
-          Image is revealed through the letters.
+          FIXED IMAGE
+          +
+          MOVING TYPOGRAPHY
+          +
+          IMAGE INSIDE LETTERS
           ===================================================== */}
 
       <section
@@ -230,58 +226,21 @@ export default function Home() {
         className="relative bg-[#FCFBF7]"
       >
 
-        {/* 
-          220vh creates enough vertical space for the
-          typography to move while the visual stays sticky.
-        */}
+        {/* Scroll distance */}
         <div className="relative h-[220vh]">
 
-          {/* =================================================
-              STICKY VIEWPORT
-              ================================================= */}
-
-          <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
-
+          {/* Sticky visual */}
+          <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-[#FCFBF7]">
 
             {/* =================================================
-                FIXED BACKGROUND IMAGE
+                IMAGE-FILLED TYPOGRAPHY
                 ================================================= */}
 
-            <div className="absolute inset-0">
+            <div className="relative z-10 flex w-full flex-col items-center justify-center">
 
-              <img
-                src="/IMG_8654.HEIC"
-                alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center"
-              />
+              {/* Section label */}
 
-              {/* Subtle image treatment */}
-              <div className="absolute inset-0 bg-[#173F5F]/10" />
-
-            </div>
-
-
-            {/* =================================================
-                IVORY MASK
-                
-                The photograph exists underneath.
-                This layer hides it everywhere except
-                inside the typography.
-                ================================================= */}
-
-            <div className="absolute inset-0 bg-[#FCFBF7]" />
-
-
-            {/* =================================================
-                CONTENT
-                ================================================= */}
-
-            <div className="relative z-10 flex w-full flex-col items-center justify-center px-4">
-
-
-              {/* Small Section Label */}
-
-              <div className="mb-8 text-center">
+              <div className="mb-10 text-center">
 
                 <p className="font-body text-[10px] font-semibold uppercase tracking-[0.4em] text-[#B89A5A]">
                   Learn more about
@@ -295,22 +254,27 @@ export default function Home() {
 
 
               {/* =================================================
-                  MOVING IMAGE-FILLED TYPOGRAPHY
+                  MOVING TEXT
+                  
+                  The actual photograph is loaded through
+                  the .image-text CSS class.
                   ================================================= */}
 
-              <div className="w-full max-w-[1600px] overflow-hidden px-2">
+              <div className="w-full overflow-hidden px-2">
 
                 <motion.div
                   style={{ y: textY }}
                   className="
                     image-text
+                    mx-auto
+                    w-full
                     text-center
                     font-heading
-                    text-[17vw]
+                    text-[16vw]
                     font-black
                     uppercase
                     leading-[0.78]
-                    tracking-[-0.06em]
+                    tracking-[-0.065em]
                   "
                 >
 
@@ -350,7 +314,7 @@ export default function Home() {
                   to="/about"
                   className="
                     group
-                    mt-6
+                    mt-7
                     inline-flex
                     items-center
                     gap-3
@@ -401,8 +365,6 @@ export default function Home() {
 
       <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 
-        {/* Header */}
-
         <div className="mb-12 flex items-end justify-between">
 
           <div>
@@ -433,8 +395,6 @@ export default function Home() {
 
         </div>
 
-
-        {/* News Cards */}
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
 
