@@ -38,20 +38,3 @@ body {
   min-height: 100vh;
   background-color: #FCFBF7;
 }
-
-/* =========================================================
-   OXAR HERITAGE — IMAGE THROUGH TYPOGRAPHY
-   ========================================================= */
-
-.image-text {
-  background-image: url("/IMG_8654.webp");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
