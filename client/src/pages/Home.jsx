@@ -42,7 +42,7 @@ export default function Home() {
     <div className="max-w-3xl text-left">
 
       {/* Welcome Home */}
-      <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6 text-center">
+      <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6 text-left">
         Welcome Home
       </h1>
 
