@@ -37,11 +37,12 @@ export default function Home() {
         />
         <div className="relative max-w-4xl mx-auto text-center z-10">
           <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6">
-            Welcome to the OXAR Alumni Network
+            Welcome Home
           </h1>
           <p className="font-body text-lg sm:text-xl text-red-100 max-w-2xl mx-auto mb-8">
-            Reconnect with classmates, share milestones, discover upcoming events, and participate in mentoring the next generation.
+            Years pass. Faces change. Memories remains. And some places never stop feeling like home
           </p>
+          <h3>Keep the Memories Alive</h3>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link
               to="/join"
