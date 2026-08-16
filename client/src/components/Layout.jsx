@@ -73,7 +73,7 @@ export default function Layout({ children }) {
     <Link
       key={link.name}
       to={link.path}
-      className={`inline-flex items-center px-2 py-2 text-sm font-normal font-body border-b-2 transition-all duration-200 ${
+      className={`inline-flex items-right px-2 py-2 text-sm font-semibold font-body border-b-2 transition-all duration-200 ${
         location.pathname === link.path
           ? 'border-primary text-primary'
           : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
