@@ -148,7 +148,7 @@ export default function Home() {
       >
 
         <img
-          src="/images/oxar-history.jpg"
+          src="https://github.com/oxaralumni/oxaralumni/blob/main/client/public/IMG_8654.HEIC"
           alt="OXAR history and heritage"
           className="
             absolute
