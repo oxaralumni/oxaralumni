@@ -148,16 +148,10 @@ export default function Home() {
       >
 
         <img
-          src="public/IMG_8654.HEIC"
-          alt="OXAR history and heritage"
-          className="
-            absolute
-            inset-0
-            h-full
-            w-full
-            object-cover
-            object-center
-          "
+  src="https://raw.githubusercontent.com/oxaralumni/oxaralumni/main/client/public/IMG_8654.HEIC"
+  alt="OXAR history"
+  className="h-full w-full object-cover"
+/>
         />
 
         {/* Dark image gradient */}
