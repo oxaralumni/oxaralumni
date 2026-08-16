@@ -8,13 +8,13 @@
   --color-secondary: #F5F5F7;
   --color-secondary-dark: #E8E8ED;
   
-  --font-heading: "Plus Jakarta Sans", sans-serif;
-  --font-body: Inter, sans-serif;
+  --font-heading: "Times New Roman", Times, serif;
+  --font-body: "Times New Roman", Times, serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
 :root {
-  font-family: 'Inter', Times New Roman;
+  font-family: "Times New Roman", Times, serif;
   background-color: #fdfafb;
   color: #1a1c1f;
 }
