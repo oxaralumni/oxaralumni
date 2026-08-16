@@ -42,7 +42,9 @@ export default function Home() {
           <p className="font-body text-lg sm:text-xl text-red-100 max-w-2xl mx-auto mb-8">
             Years pass. Faces change. Memories remains. And some places never stop feeling like home
           </p>
-          <h2>Keep the Memories Alive</h2>
+          <p className="font-body text-lg sm:text-xl text-red-100 max-w-2xl mx-auto mb-8">
+            Keep the Memories Alive
+          </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link
               to="/join"
