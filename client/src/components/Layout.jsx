@@ -68,21 +68,21 @@ export default function Layout({ children }) {
               <Link to="/" className="flex-shrink-0 flex items-center">
                 <span className="font-heading font-extrabold text-lg text-primary tracking-tight mr-1 xl:mr-2">OXAR</span>
               </Link>
-              <nav className="hidden lg:flex lg:ml-2 space-x-1 xl:space-x-2">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className={`inline-flex items-center px-1 pt-1 text-[11px] xl:text-xs font-semibold font-body border-b-2 transition-all duration-200 ${
-                      location.pathname === link.path
-                        ? 'border-primary text-primary'
-                        : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </nav>
+            <nav className="hidden lg:flex lg:ml-auto space-x-3 xl:space-x-4 items-center">
+  {navLinks.map((link) => (
+    <Link
+      key={link.name}
+      to={link.path}
+      className={`inline-flex items-center px-2 pt-1 text-sm xl:text-base font-semibold font-body border-b-2 transition-all duration-200 ${
+        location.pathname === link.path
+          ? 'border-primary text-primary'
+          : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
+      }`}
+    >
+      {link.name}
+    </Link>
+  ))}
+</nav>
             </div>
 
             {/* Right side CTA / Auth Info */}
