@@ -47,20 +47,18 @@ export default function Home() {
       </h1>
 
       {/* Main message */}
-      <p className="font-body text-lg sm:text-xl text-red-100 mb-8 leading-relaxed">
-        <span className="block">
-          Years pass. Faces change. Memories remain.
-        </span>
-        <span className="block">
-          Some places never stop feeling like home.
-        </span>
-      </p>
+     <p className="font-body text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
+  <span className="block">
+    Years pass. Faces change. Memories remain.
+  </span>
+  <span className="block">
+    Some places never stop feeling like home.
+  </span>
+</p>
 
-      {/* Tagline */}
-      <p className="font-body text-lg sm:text-xl text-red-100 italic">
-        Keep the Memories Alive
-      </p>
-
+<p className="font-body text-lg sm:text-xl text-white/90 italic">
+  Keep the Memories Alive
+</p>
     </div>
   </div>
 </section>
