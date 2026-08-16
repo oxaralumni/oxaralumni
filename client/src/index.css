@@ -38,3 +38,16 @@ body {
   min-height: 100vh;
   background-color: #FCFBF7;
 }
+
+.image-text {
+  background-image: url("/IMG_8654.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
