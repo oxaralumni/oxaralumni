@@ -18,10 +18,11 @@ export default function Home() {
     offset: ['start start', 'end end'],
   })
 
+  // Text moves upward as the user scrolls
   const textY = useTransform(
     scrollYProgress,
     [0, 1],
-    ['120px', '-220px']
+    ['80px', '-260px']
   )
 
   // =========================================================
@@ -93,6 +94,7 @@ export default function Home() {
         />
 
         <div className="relative z-10 mx-auto max-w-7xl">
+
           <div className="max-w-3xl text-left">
 
             <h1 className="mb-6 font-heading text-4xl font-extrabold leading-none tracking-tight sm:text-5xl lg:text-6xl">
@@ -114,6 +116,7 @@ export default function Home() {
             </p>
 
           </div>
+
         </div>
 
       </section>
@@ -208,8 +211,9 @@ export default function Home() {
       {/* =====================================================
           OXAR HERITAGE
           
-          Fixed image + moving typography
-          Image appears inside the letters
+          IMAGE FIXED BEHIND TEXT
+          TEXT MOVES WITH SCROLL
+          IMAGE IS VISIBLE ONLY INSIDE LETTERS
           ===================================================== */}
 
       <section
@@ -217,44 +221,101 @@ export default function Home() {
         className="relative bg-[#FCFBF7]"
       >
 
-        {/* Scroll distance */}
+        {/* Large scroll area */}
         <div className="relative h-[220vh]">
 
           {/* Sticky viewport */}
           <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-[#FCFBF7]">
 
+            {/* =================================================
+                MAIN CONTENT
+                ================================================= */}
+
             <div className="relative z-10 flex w-full flex-col items-center justify-center">
 
-              {/* Section Label */}
+              {/* -------------------------------------------------
+                  SECTION LABEL
+                  ------------------------------------------------- */}
 
               <div className="mb-10 text-center">
 
-                <p className="font-body text-[10px] font-semibold uppercase tracking-[0.4em] text-[#B89A5A]">
+                <p
+                  className="
+                    font-body
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.4em]
+                    text-[#B89A5A]
+                  "
+                >
                   Learn more about
                 </p>
 
-                <p className="mt-2 font-heading text-2xl font-bold text-[#173F5F]">
+                <p
+                  className="
+                    mt-2
+                    font-heading
+                    text-2xl
+                    font-bold
+                    text-[#173F5F]
+                  "
+                >
                   OXAR History
                 </p>
 
               </div>
 
 
-              {/* =================================================
-                  MOVING IMAGE-FILLED TYPOGRAPHY
-                  ================================================= */}
+              {/* -------------------------------------------------
+                  IMAGE THROUGH TEXT
+                  ------------------------------------------------- */}
 
-              <div className="w-full overflow-hidden px-2">
+              <div className="w-full overflow-hidden">
 
                 <motion.div
-                  style={{ y: textY }}
+                  style={{
+                    y: textY,
+
+                    /*
+                     * THE ACTUAL OXAR PHOTO
+                     *
+                     * Because it is a background of the text,
+                     * it is visible only inside the letters.
+                     */
+                    backgroundImage: 'url("/IMG_8654.webp")',
+
+                    backgroundSize: 'cover',
+
+                    backgroundPosition: 'center center',
+
+                    backgroundRepeat: 'no-repeat',
+
+                    /*
+                     * Keeps the photograph visually fixed
+                     * while the typography moves.
+                     */
+                    backgroundAttachment: 'fixed',
+
+                    /*
+                     * Clip image to the text.
+                     */
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+
+                    /*
+                     * Make original text transparent.
+                     */
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+
                   className="
-                    image-text
                     mx-auto
                     w-full
                     text-center
                     font-heading
-                    text-[16vw]
+                    text-[15vw]
                     font-black
                     uppercase
                     leading-[0.78]
@@ -279,18 +340,30 @@ export default function Home() {
               </div>
 
 
-              {/* =================================================
-                  DESCRIPTION + CTA
-                  ================================================= */}
+              {/* -------------------------------------------------
+                  DESCRIPTION
+                  ------------------------------------------------- */}
 
               <div className="mt-12 max-w-xl px-6 text-center">
 
-                <p className="font-body text-sm leading-6 text-[#46545D] md:text-base">
+                <p
+                  className="
+                    font-body
+                    text-sm
+                    leading-6
+                    text-[#46545D]
+                    md:text-base
+                  "
+                >
                   A community shaped by shared classrooms,
                   lasting friendships and a legacy that continues
                   across generations.
                 </p>
 
+
+                {/* -------------------------------------------------
+                    CTA
+                    ------------------------------------------------- */}
 
                 <Link
                   to="/about"
@@ -366,11 +439,13 @@ export default function Home() {
             to="/news"
             className="flex items-center font-body text-sm font-semibold text-secondary transition-colors hover:text-secondary-dark"
           >
+
             <span>
               View All News
             </span>
 
             <ArrowRight className="ml-1 h-4 w-4" />
+
           </Link>
 
         </div>
