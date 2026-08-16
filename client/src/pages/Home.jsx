@@ -29,38 +29,41 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative text-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-primary">
-        {/* Background Image overlay */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay pointer-events-none"
-          style={{ backgroundImage: `url('https://xaviersrohini.edu.in/images/About-School.png')` }}
-        />
-        <div className="relative max-w-4xl mx-auto text-center z-10">
-          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6">
-            Welcome Home
-          </h1>
-          <p className="font-body text-lg sm:text-xl text-red-100 max-w-2xl mx-auto mb-8">
-            Years pass. Faces change. Memories remains. And some places never stop feeling like home
-          </p>
-          <p className="font-body text-lg sm:text-xl text-red-100 max-w-2xl mx-auto mb-8">
-            Keep the Memories Alive
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <Link
-              to="/join"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-white hover:bg-red-50 shadow-md transition-all duration-250"
-            >
-              Join the Community
-            </Link>
-            <Link
-              to="/directory"
-              className="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-primary transition-all duration-250"
-            >
-              Explore Directory
-            </Link>
-          </div>
-        </div>
-      </section>
+     <section className="relative text-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-primary">
+  {/* Background Image overlay */}
+  <div
+    className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay pointer-events-none"
+    style={{
+      backgroundImage: `url('https://xaviersrohini.edu.in/images/About-School.png')`
+    }}
+  />
+
+  <div className="relative z-10 max-w-7xl mx-auto">
+    <div className="max-w-3xl text-left">
+
+      {/* Welcome Home */}
+      <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6 text-center">
+        Welcome Home
+      </h1>
+
+      {/* Main message */}
+      <p className="font-body text-lg sm:text-xl text-red-100 mb-8 leading-relaxed">
+        <span className="block">
+          Years pass. Faces change. Memories remain.
+        </span>
+        <span className="block">
+          Some places never stop feeling like home.
+        </span>
+      </p>
+
+      {/* Tagline */}
+      <p className="font-body text-lg sm:text-xl text-red-100 italic">
+        Keep the Memories Alive
+      </p>
+
+    </div>
+  </div>
+</section>
 
 
       {/* OXAR Introduction / Mission */}
