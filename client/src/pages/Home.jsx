@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-     <section className="relative text-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-primary">
+    <section className="relative text-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-primary">
   {/* Background Image overlay */}
   <div
     className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-overlay pointer-events-none"
@@ -42,7 +42,7 @@ export default function Home() {
     <div className="max-w-3xl text-left">
 
       {/* Welcome Home */}
-      <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6 text-left">
+      <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none mb-6">
         Welcome Home
       </h1>
 
@@ -64,7 +64,6 @@ export default function Home() {
     </div>
   </div>
 </section>
-
 
       {/* OXAR Introduction / Mission */}
       <section className="bg-white py-16 border-y border-[#E0E0E0] px-4 sm:px-6 lg:px-8">
