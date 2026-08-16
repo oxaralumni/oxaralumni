@@ -96,65 +96,219 @@ export default function Home() {
         </div>
       </section>
 
-  {/* OXAR HISTORY */}
-<section className="relative overflow-hidden bg-[#FCFBF7] py-20 md:py-28">
+ {/* =========================================================
+    OXAR HERITAGE — PREMIUM EDITORIAL SECTION
+    ========================================================= */}
+<section className="relative overflow-hidden bg-[#FCFBF7] py-24 md:py-32">
 
-  {/* Section Heading */}
-  <div className="mx-auto max-w-7xl px-6 text-center">
-    <h2 className="font-heading text-3xl font-bold tracking-tight text-[#173F5F] md:text-4xl lg:text-5xl">
-      Learn more about OXAR History
-    </h2>
+  {/* ---------------------------------------------------------
+      SECTION INTRO
+      --------------------------------------------------------- */}
+  <div className="mx-auto max-w-7xl px-6 md:px-10">
 
-    {/* Gold Divider */}
-    <div className="mx-auto mt-5 flex items-center justify-center gap-3">
-      <span className="h-px w-20 bg-[#B89A5A]" />
-      <span className="h-2 w-2 rotate-45 bg-[#B89A5A]" />
-      <span className="h-px w-20 bg-[#B89A5A]" />
+    <div className="flex items-end justify-between border-b border-[#D8D1C4] pb-6">
+
+      <div>
+        <p className="mb-3 font-body text-[11px] font-semibold uppercase tracking-[0.28em] text-[#B89A5A]">
+          The OXAR Story
+        </p>
+
+        <h2 className="font-heading text-3xl font-bold tracking-tight text-[#173F5F] md:text-4xl">
+          Learn more about OXAR History
+        </h2>
+      </div>
+
+      <div className="hidden text-right md:block">
+        <span className="font-body text-xs uppercase tracking-[0.2em] text-[#7A858B]">
+          Heritage · Community · Legacy
+        </span>
+      </div>
+
     </div>
   </div>
 
 
-  {/* Main Editorial Composition */}
-  <div className="relative mx-auto mt-12 max-w-[1400px] px-6">
+  {/* ---------------------------------------------------------
+      MAIN EDITORIAL FEATURE
+      --------------------------------------------------------- */}
+  <div className="mx-auto mt-14 max-w-7xl px-6 md:px-10">
 
-    {/* Navy Background Panel
-        Extends behind and beyond the image */}
-    <div
-      className="
-        absolute
-        bottom-0
-        left-0
-        right-0
-        top-[22%]
-        rounded-[18px]
-        bg-[#173F5F]
-      "
-    />
+    <div className="relative grid lg:grid-cols-[0.85fr_1.5fr]">
 
 
-    {/* Content Layer */}
-    <div className="relative z-10">
-
-
-      {/* =========================================
-          IMAGE
-          ========================================= */}
+      {/* =====================================================
+          LEFT BRAND PANEL
+          ===================================================== */}
       <div
         className="
           relative
-          ml-[5%]
-          h-[430px]
-          w-[90%]
+          z-10
+          flex
+          min-h-[520px]
+          flex-col
+          justify-between
+          bg-[#173F5F]
+          px-8
+          py-10
+          md:px-12
+          md:py-14
+          lg:min-h-[610px]
+          lg:-mr-12
+          lg:my-10
+          lg:px-14
+          lg:py-14
+        "
+      >
+
+        {/* OXAR Brand Mark */}
+        <div>
+
+          <div className="flex items-center gap-3">
+
+            <div className="flex h-9 w-9 items-center justify-center border border-[#B89A5A]/70">
+              <span className="font-heading text-sm font-bold text-[#B89A5A]">
+                O
+              </span>
+            </div>
+
+            <span className="font-body text-[11px] font-semibold uppercase tracking-[0.3em] text-[#DDE7EC]">
+              OXAR
+            </span>
+
+          </div>
+
+        </div>
+
+
+        {/* Main Content */}
+        <div className="relative">
+
+          {/* Small eyebrow */}
+          <p className="mb-5 font-body text-[11px] font-semibold uppercase tracking-[0.25em] text-[#B89A5A]">
+            Our Xavierian Heritage
+          </p>
+
+
+          {/* Heading */}
+          <h3
+            className="
+              max-w-xl
+              font-heading
+              text-5xl
+              font-bold
+              leading-[0.9]
+              tracking-[-0.035em]
+              text-[#FCFBF7]
+              md:text-6xl
+              lg:text-[72px]
+            "
+          >
+            A legacy
+            <br />
+            that lives on.
+          </h3>
+
+
+          {/* Gold divider */}
+          <div className="my-7 flex items-center gap-3">
+
+            <span className="h-[2px] w-16 bg-[#B89A5A]" />
+
+            <span className="h-1.5 w-1.5 rotate-45 bg-[#B89A5A]" />
+
+          </div>
+
+
+          {/* Description */}
+          <p
+            className="
+              max-w-md
+              font-body
+              text-base
+              leading-7
+              text-[#DCE6EB]
+              md:text-lg
+            "
+          >
+            From the classrooms where friendships began to the memories
+            that continue to connect generations, OXAR carries forward
+            the spirit of the Xavierian community.
+          </p>
+
+
+          {/* CTA */}
+          <Link
+            to="/about"
+            className="
+              group
+              mt-9
+              inline-flex
+              items-center
+              gap-4
+              border-b
+              border-[#B89A5A]/60
+              pb-2
+              font-body
+              text-[11px]
+              font-semibold
+              uppercase
+              tracking-[0.24em]
+              text-[#FCFBF7]
+              transition-all
+              duration-300
+              hover:border-[#B89A5A]
+              hover:text-[#B89A5A]
+            "
+          >
+
+            Explore our history
+
+            <ArrowRight
+              className="
+                h-4
+                w-4
+                transition-transform
+                duration-300
+                group-hover:translate-x-2
+              "
+            />
+
+          </Link>
+
+        </div>
+
+
+        {/* Bottom metadata */}
+        <div className="mt-12 flex items-end justify-between border-t border-white/15 pt-5">
+
+          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#AEBFC8]">
+            Old Xavierians
+          </span>
+
+          <span className="font-heading text-lg text-[#B89A5A]">
+            OXAR
+          </span>
+
+        </div>
+
+      </div>
+
+
+      {/* =====================================================
+          IMAGE
+          ===================================================== */}
+      <div
+        className="
+          relative
+          min-h-[430px]
           overflow-hidden
-          rounded-t-[16px]
-          md:h-[540px]
-          lg:h-[600px]
+          lg:min-h-[650px]
         "
       >
 
         <img
           src="/IMG_8654.HEIC"
-          alt="OXAR history and heritage"
+          alt="OXAR heritage"
           className="
             absolute
             inset-0
@@ -162,153 +316,84 @@ export default function Home() {
             w-full
             object-cover
             object-center
+            transition-transform
+            duration-700
+            hover:scale-[1.02]
           "
         />
 
-        {/* Image Overlay */}
+
+        {/* Image treatment */}
         <div
           className="
             absolute
             inset-0
             bg-gradient-to-r
-            from-[#102F48]/65
-            via-[#173F5F]/20
-            to-transparent
+            from-[#173F5F]/25
+            via-transparent
+            to-[#173F5F]/10
           "
         />
 
-        {/* Bottom Image Fade */}
+
+        {/* Bottom image gradient */}
         <div
           className="
             absolute
             inset-x-0
             bottom-0
-            h-48
+            h-40
             bg-gradient-to-t
-            from-[#173F5F]/70
-            via-[#173F5F]/20
+            from-[#102F48]/50
             to-transparent
           "
         />
 
-      </div>
 
-
-      {/* =========================================
-          TEXT CONTENT
-          ========================================= */}
-      <div
-        className="
-          relative
-          ml-[5%]
-          w-[90%]
-          px-8
-          pb-16
-          md:px-14
-          md:pb-20
-          lg:px-20
-          lg:pb-24
-        "
-      >
-
-        {/* Main Heading
-            Overlaps the image and navy panel */}
-        <h3
+        {/* Image label */}
+        <div
           className="
-            relative
-            -mt-[78px]
-            max-w-4xl
-            font-heading
-            text-5xl
-            font-bold
-            leading-[0.92]
-            tracking-[-0.035em]
-            text-white
-            md:-mt-[100px]
-            md:text-6xl
-            lg:-mt-[115px]
-            lg:text-8xl
+            absolute
+            bottom-6
+            right-6
+            border
+            border-white/30
+            bg-[#102F48]/60
+            px-4
+            py-2
+            backdrop-blur-md
           "
         >
-          Our Xavierian
-          <br />
-          Heritage
-        </h3>
-
-
-        {/* Gold Accent Line */}
-        <div className="mt-8 h-[2px] w-24 bg-[#B89A5A]" />
-
-
-        {/* Description */}
-        <p
-          className="
-            mt-7
-            max-w-3xl
-            font-body
-            text-lg
-            leading-relaxed
-            text-[#E6EEF2]
-            md:text-xl
-          "
-        >
-          From the classrooms where friendships began to the memories
-          that continue to connect generations, OXAR carries forward
-          the spirit of the Xavierian community.
-        </p>
-
-
-        {/* CTA */}
-        <Link
-          to="/about"
-          className="
-            group
-            mt-9
-            inline-flex
-            items-center
-            gap-4
-            font-body
-            text-sm
-            font-semibold
-            uppercase
-            tracking-[0.18em]
-            text-white
-            transition-colors
-            duration-300
-            hover:text-[#B89A5A]
-          "
-        >
-          Discover our history
-
-          <ArrowRight
-            className="
-              h-4
-              w-4
-              transition-transform
-              duration-300
-              group-hover:translate-x-2
-            "
-          />
-        </Link>
+          <span className="font-body text-[9px] font-semibold uppercase tracking-[0.22em] text-white">
+            Xavierian Heritage
+          </span>
+        </div>
 
       </div>
 
     </div>
-  </div>
 
 
-  {/* =========================================
-      BOTTOM ORNAMENT
-      ========================================= */}
-  <div className="mx-auto mt-12 flex max-w-5xl items-center justify-center gap-4 px-6">
+    {/* -------------------------------------------------------
+        BOTTOM BRAND LINE
+        ------------------------------------------------------- */}
+    <div className="mt-8 flex items-center justify-between">
 
-    <span className="h-px flex-1 bg-[#D8C7A0]" />
+      <div className="flex items-center gap-4">
 
-    <span className="text-xl text-[#B89A5A]">
-      ✦
-    </span>
+        <span className="h-px w-12 bg-[#B89A5A]" />
 
-    <span className="h-px flex-1 bg-[#D8C7A0]" />
+        <span className="font-body text-[10px] font-semibold uppercase tracking-[0.25em] text-[#7A858B]">
+          One community
+        </span>
+
+      </div>
+
+      <span className="hidden font-body text-[10px] uppercase tracking-[0.2em] text-[#A0A8AC] md:block">
+        OXAR Alumni Association
+      </span>
+
+    </div>
 
   </div>
 
