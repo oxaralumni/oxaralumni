@@ -3,11 +3,11 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #164A4A;
-  --color-primary-dark: #0F3535;
+  --color-primary: #4A90B8;
+  --color-primary-dark: #2F6F95;
 
-  --color-secondary: #B0935A;
-  --color-secondary-dark: #8F7444;
+  --color-secondary: #A8CFE3;
+  --color-secondary-dark: #78AFCB;
 
   --font-heading: "Times New Roman", Times, serif;
   --font-body: "Times New Roman", Times, serif;
@@ -16,8 +16,8 @@
 
 :root {
   font-family: "Times New Roman", Times, serif;
-  background-color: #F5F3ED;
-  color: #252525;
+  background-color: #F4F9FC;
+  color: #243746;
 }
 
 body {
