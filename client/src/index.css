@@ -44,7 +44,7 @@ body {
    ========================================================= */
 
 .image-text {
-  background-image: url("https://raw.githubusercontent.com/oxaralumni/oxaralumni/main/client/public/IMG_8654.webp");
+  background-image: url("/IMG_8654.webp");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
