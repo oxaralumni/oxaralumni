@@ -62,93 +62,106 @@ export default function Layout({ children }) {
     <div className="min-h-screen flex flex-col bg-[#f9f9fd] text-[#1a1c1f]">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-[#E0E0E0] shadow-sm">
-        <div className="max-w-full mx-auto px-2 sm:px-4 lg:px-6">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link to="/" className="flex-shrink-0 flex items-center">
-                <span className="font-title font-extrabold text-lg text-primary tracking-tight mr-1 xl:mr-2">OXAR</span>
-              </Link>
-           <div className="flex items-center w-full">
-            {/* Logo */}
+        <div className="flex items-center h-16 w-full">
+        {/* OXAR Logo */}
+        <Link to="/" className="flex-shrink-0 flex items-center">
+          <span className="font-title font-extrabold text-lg text-primary tracking-tight">
+            OXAR
+          </span>
+        </Link>
+      
+        {/* Desktop Navigation + Auth */}
+        <div className="hidden lg:flex items-center ml-auto">
           
-            <nav className="hidden lg:flex ml-auto items-center space-x-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className={`inline-flex items-center px-2 py-2 text-sm font-semibold font-body border-b-2 transition-all duration-200 ${
-                    location.pathname === link.path
-                      ? 'border-primary text-primary'
-                      : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-            {/* Right side CTA / Auth Info */}
-            <div className="hidden lg:flex lg:items-center lg:space-x-4">
-              {user ? (
-                <div className="flex items-center space-x-4">
-                  {profile?.is_admin && (
-                    <Link to="/admin" className="text-sm font-medium text-secondary hover:text-secondary-dark">
-                      Admin Panel
-                    </Link>
-                  )}
-                  <Link to="/profile" className="flex items-center space-x-2 text-gray-600 hover:text-primary">
-                    <User className="h-5 w-5" />
-                    <span className="text-sm font-medium">{profile?.full_name || 'My Profile'}</span>
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center space-x-1 text-sm font-medium text-red-600 hover:text-red-800"
+          {/* Navigation */}
+          <nav className="flex items-center space-x-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className={`inline-flex items-center px-2 py-2 text-sm font-semibold font-body border-b-2 transition-all duration-200 ${
+                  location.pathname === link.path
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-gray-500 hover:text-primary hover:border-gray-300'
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+      
+          {/* Login / Join */}
+          <div className="ml-8 flex items-center">
+            {user ? (
+              <div className="flex items-center space-x-4">
+                {profile?.is_admin && (
+                  <Link
+                    to="/admin"
+                    className="text-sm font-medium text-secondary hover:text-secondary-dark"
                   >
-                    <LogOut className="h-4 w-4" />
-                    <span>Logout</span>
-                  </button>
-                </div>
-              ) : (
-                <>
-                  {isJoinPage ? (
+                    Admin Panel
+                  </Link>
+                )}
+      
+                <Link
+                  to="/profile"
+                  className="flex items-center space-x-2 text-gray-600 hover:text-primary"
+                >
+                  <User className="h-5 w-5" />
+                  <span className="text-sm font-medium">
+                    {profile?.full_name || 'My Profile'}
+                  </span>
+                </Link>
+      
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center space-x-1 text-sm font-medium text-red-600 hover:text-red-800"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <>
+                {isJoinPage ? (
+                  <Link
+                    to="/login"
+                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark shadow-sm transition-all duration-250"
+                  >
+                    Login
+                  </Link>
+                ) : (
+                  <div className="flex items-center space-x-3">
                     <Link
                       to="/login"
-                      className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark shadow-sm transition-all duration-250"
+                      className="text-sm font-medium text-gray-500 hover:text-primary"
                     >
                       Login
                     </Link>
-                  ) : (
-                    <div className="flex items-center space-x-3">
-                      <Link
-                        to="/login"
-                        className="text-sm font-medium text-gray-500 hover:text-primary"
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        to="/join"
-                        className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark shadow-sm transition-all duration-250"
-                      >
-                        Join
-                      </Link>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-
-            {/* Mobile Hamburger Button */}
-            <div className="flex items-center lg:hidden">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100 focus:outline-none"
-              >
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
+      
+                    <Link
+                      to="/join"
+                      className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark shadow-sm transition-all duration-250"
+                    >
+                      Join
+                    </Link>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
+      
+        {/* Mobile Hamburger */}
+        <div className="flex items-center lg:hidden ml-auto">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100 focus:outline-none"
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </div>
 
         {/* Mobile Navigation Drawer */}
         {isOpen && (
