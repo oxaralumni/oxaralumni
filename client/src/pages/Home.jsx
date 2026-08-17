@@ -8,7 +8,7 @@ export default function Home() {
   const [recentNews, setRecentNews] = useState([])
 
   // =========================================================
-  // OXAR HERITAGE SCROLL ANIMATION
+  // OXAR HERITAGE SCROLL
   // =========================================================
 
   const heritageRef = useRef(null)
@@ -18,11 +18,10 @@ export default function Home() {
     offset: ['start start', 'end end'],
   })
 
-  // Text moves upward as the user scrolls
   const textY = useTransform(
     scrollYProgress,
     [0, 1],
-    ['80px', '-260px']
+    ['100px', '-250px']
   )
 
   // =========================================================
@@ -80,7 +79,7 @@ export default function Home() {
     <div className="flex flex-col">
 
       {/* =====================================================
-          HERO SECTION
+          HERO
           ===================================================== */}
 
       <section className="relative overflow-hidden bg-primary px-4 py-24 text-white sm:px-6 lg:px-8">
@@ -123,12 +122,14 @@ export default function Home() {
 
 
       {/* =====================================================
-          OXAR INTRODUCTION / MISSION
+          MISSION & COMMUNITY
           ===================================================== */}
 
       <section className="border-y border-[#E0E0E0] bg-white px-4 py-16 sm:px-6 lg:px-8">
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
+
+          {/* Text */}
 
           <div>
 
@@ -211,9 +212,7 @@ export default function Home() {
       {/* =====================================================
           OXAR HERITAGE
           
-          IMAGE FIXED BEHIND TEXT
-          TEXT MOVES WITH SCROLL
-          IMAGE IS VISIBLE ONLY INSIDE LETTERS
+          PREMIUM EDITORIAL IMAGE + TYPOGRAPHY
           ===================================================== */}
 
       <section
@@ -221,46 +220,56 @@ export default function Home() {
         className="relative bg-[#FCFBF7]"
       >
 
-        {/* Large scroll area */}
+        {/* Scroll distance */}
         <div className="relative h-[220vh]">
 
-          {/* Sticky viewport */}
-          <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-[#FCFBF7]">
+          {/* =================================================
+              STICKY VIEWPORT
+              ================================================= */}
+
+          <div className="sticky top-0 h-screen overflow-hidden bg-[#FCFBF7]">
+
+            {/* =================================================
+                STATIONARY IMAGE LAYER
+                ================================================= */}
+
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage: 'url("/IMG_8654.webp")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center center',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
+
+
+            {/* =================================================
+                IVORY MASK
+
+                Keeps the surrounding area clean.
+                ================================================= */}
+
+            <div className="pointer-events-none absolute inset-0 bg-[#FCFBF7]" />
+
 
             {/* =================================================
                 MAIN CONTENT
                 ================================================= */}
 
-            <div className="relative z-10 flex w-full flex-col items-center justify-center">
+            <div className="relative z-10 flex h-full flex-col items-center justify-center">
 
               {/* -------------------------------------------------
-                  SECTION LABEL
+                  LABEL
                   ------------------------------------------------- */}
 
               <div className="mb-10 text-center">
 
-                <p
-                  className="
-                    font-body
-                    text-[10px]
-                    font-semibold
-                    uppercase
-                    tracking-[0.4em]
-                    text-[#B89A5A]
-                  "
-                >
+                <p className="font-body text-[10px] font-semibold uppercase tracking-[0.4em] text-[#B89A5A]">
                   Learn more about
                 </p>
 
-                <p
-                  className="
-                    mt-2
-                    font-heading
-                    text-2xl
-                    font-bold
-                    text-[#173F5F]
-                  "
-                >
+                <p className="mt-2 font-heading text-2xl font-bold text-[#173F5F]">
                   OXAR History
                 </p>
 
@@ -268,51 +277,21 @@ export default function Home() {
 
 
               {/* -------------------------------------------------
-                  IMAGE THROUGH TEXT
+                  MOVING TYPOGRAPHY
                   ------------------------------------------------- */}
 
-              <div className="w-full overflow-hidden">
+              <motion.div
+                style={{
+                  y: textY,
+                }}
+                className="relative w-full"
+              >
 
-                <motion.div
-                  style={{
-                    y: textY,
-
-                    /*
-                     * THE ACTUAL OXAR PHOTO
-                     *
-                     * Because it is a background of the text,
-                     * it is visible only inside the letters.
-                     */
-                    backgroundImage: 'url("/IMG_8654.webp")',
-
-                    backgroundSize: 'cover',
-
-                    backgroundPosition: 'center center',
-
-                    backgroundRepeat: 'no-repeat',
-
-                    /*
-                     * Keeps the photograph visually fixed
-                     * while the typography moves.
-                     */
-                    backgroundAttachment: 'fixed',
-
-                    /*
-                     * Clip image to the text.
-                     */
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-
-                    /*
-                     * Make original text transparent.
-                     */
-                    color: 'transparent',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-
+                <div
                   className="
                     mx-auto
                     w-full
+                    px-2
                     text-center
                     font-heading
                     text-[15vw]
@@ -321,6 +300,18 @@ export default function Home() {
                     leading-[0.78]
                     tracking-[-0.065em]
                   "
+                  style={{
+                    backgroundImage: 'url("/IMG_8654.webp")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
+
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent',
+                  }}
                 >
 
                   <span className="block">
@@ -335,9 +326,9 @@ export default function Home() {
                     OXAR
                   </span>
 
-                </motion.div>
+                </div>
 
-              </div>
+              </motion.div>
 
 
               {/* -------------------------------------------------
@@ -346,24 +337,14 @@ export default function Home() {
 
               <div className="mt-12 max-w-xl px-6 text-center">
 
-                <p
-                  className="
-                    font-body
-                    text-sm
-                    leading-6
-                    text-[#46545D]
-                    md:text-base
-                  "
-                >
+                <p className="font-body text-sm leading-6 text-[#46545D] md:text-base">
                   A community shaped by shared classrooms,
                   lasting friendships and a legacy that continues
                   across generations.
                 </p>
 
 
-                {/* -------------------------------------------------
-                    CTA
-                    ------------------------------------------------- */}
+                {/* CTA */}
 
                 <Link
                   to="/about"
@@ -419,6 +400,8 @@ export default function Home() {
           ===================================================== */}
 
       <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+
+        {/* Header */}
 
         <div className="mb-12 flex items-end justify-between">
 
