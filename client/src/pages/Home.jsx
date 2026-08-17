@@ -18,10 +18,17 @@ export default function Home() {
     offset: ['start start', 'end end'],
   })
 
-  const textY = useTransform(
+  /*
+   * The typography moves vertically.
+   *
+   * IMPORTANT:
+   * The photograph itself is NOT transformed.
+   * Only the SVG mask/text moves.
+   */
+  const heritageTextY = useTransform(
     scrollYProgress,
     [0, 1],
-    ['100px', '-250px']
+    [100, -220]
   )
 
   // =========================================================
@@ -79,7 +86,7 @@ export default function Home() {
     <div className="flex flex-col">
 
       {/* =====================================================
-          HERO
+          HERO SECTION
           ===================================================== */}
 
       <section className="relative overflow-hidden bg-primary px-4 py-24 text-white sm:px-6 lg:px-8">
@@ -101,6 +108,7 @@ export default function Home() {
             </h1>
 
             <p className="mb-8 font-body text-lg leading-relaxed text-white/90 sm:text-xl">
+
               <span className="block">
                 Years pass. Faces change. Memories remain.
               </span>
@@ -108,6 +116,7 @@ export default function Home() {
               <span className="block">
                 Some places never stop feeling like home.
               </span>
+
             </p>
 
             <p className="font-body text-lg italic text-white/90 sm:text-xl">
@@ -122,14 +131,14 @@ export default function Home() {
 
 
       {/* =====================================================
-          MISSION & COMMUNITY
+          OXAR INTRODUCTION / MISSION
           ===================================================== */}
 
       <section className="border-y border-[#E0E0E0] bg-white px-4 py-16 sm:px-6 lg:px-8">
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
 
-          {/* Text */}
+          {/* Mission */}
 
           <div>
 
@@ -157,11 +166,13 @@ export default function Home() {
                 to="/about"
                 className="inline-flex items-center font-body font-semibold text-secondary transition-colors hover:text-secondary-dark"
               >
+
                 <span>
                   Learn more about OXAR history
                 </span>
 
                 <ArrowRight className="ml-1 h-4 w-4" />
+
               </Link>
 
             </div>
@@ -211,180 +222,338 @@ export default function Home() {
 
       {/* =====================================================
           OXAR HERITAGE
-          
-          PREMIUM EDITORIAL IMAGE + TYPOGRAPHY
+
+          PREMIUM PHOTO-IN-TYPOGRAPHY EXPERIENCE
+
+          Architecture:
+
+          ┌───────────────────────────────┐
+          │                               │
+          │     STATIONARY PHOTOGRAPH     │
+          │                               │
+          │       XAVIERIAN              │
+          │       HERITAGE               │
+          │          OXAR                │
+          │                               │
+          └───────────────────────────────┘
+
+          The photograph never moves.
+
+          The SVG text mask moves over the photograph.
+
+          This avoids:
+          - background-attachment: fixed
+          - transform + fixed background
+          - background-clip:text browser issues
           ===================================================== */}
 
       <section
         ref={heritageRef}
-        className="relative bg-[#FCFBF7]"
+        className="relative overflow-hidden bg-[#FCFBF7]"
       >
 
-        {/* Scroll distance */}
+        {/* -----------------------------------------------------
+            LONG SCROLL DISTANCE
+            ----------------------------------------------------- */}
+
         <div className="relative h-[220vh]">
 
-          {/* =================================================
+          {/* ---------------------------------------------------
               STICKY VIEWPORT
-              ================================================= */}
+              --------------------------------------------------- */}
 
-          <div className="sticky top-0 h-screen overflow-hidden bg-[#FCFBF7]">
+          <div className="sticky top-0 h-screen w-full overflow-hidden">
 
             {/* =================================================
-                STATIONARY IMAGE LAYER
+                PHOTOGRAPH
+
+                THIS IMAGE NEVER MOVES.
+                ================================================= */}
+
+            <div className="absolute inset-0">
+
+              <img
+                src="https://raw.githubusercontent.com/oxaralumni/oxaralumni/main/client/public/IMG_8654.webp"
+                alt=""
+                aria-hidden="true"
+                className="
+                  h-full
+                  w-full
+                  object-cover
+                  object-center
+                "
+              />
+
+            </div>
+
+
+            {/* =================================================
+                IVORY OVERLAY
+
+                The image underneath is completely hidden.
+                Only the SVG mask reveals it.
+                ================================================= */}
+
+            <div className="absolute inset-0 bg-[#FCFBF7]" />
+
+
+            {/* =================================================
+                SECTION TITLE
                 ================================================= */}
 
             <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                backgroundImage: 'url("/IMG_8654.webp")',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center center',
-                backgroundRepeat: 'no-repeat',
-              }}
-            />
+              className="
+                absolute
+                left-0
+                right-0
+                top-[9%]
+                z-20
+                px-6
+                text-center
+              "
+            >
 
+              <p
+                className="
+                  font-body
+                  text-[10px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.45em]
+                  text-[#B89A5A]
+                "
+              >
+                Learn more about
+              </p>
 
-            {/* =================================================
-                IVORY MASK
+              <h2
+                className="
+                  mt-3
+                  font-heading
+                  text-3xl
+                  font-bold
+                  tracking-tight
+                  text-[#173F5F]
+                  md:text-4xl
+                "
+              >
+                OXAR History
+              </h2>
 
-                Keeps the surrounding area clean.
-                ================================================= */}
+              <div className="mx-auto mt-5 flex items-center justify-center gap-3">
 
-            <div className="pointer-events-none absolute inset-0 bg-[#FCFBF7]" />
+                <span className="h-px w-16 bg-[#B89A5A]/70" />
 
+                <span className="h-1.5 w-1.5 rotate-45 bg-[#B89A5A]" />
 
-            {/* =================================================
-                MAIN CONTENT
-                ================================================= */}
-
-            <div className="relative z-10 flex h-full flex-col items-center justify-center">
-
-              {/* -------------------------------------------------
-                  LABEL
-                  ------------------------------------------------- */}
-
-              <div className="mb-10 text-center">
-
-                <p className="font-body text-[10px] font-semibold uppercase tracking-[0.4em] text-[#B89A5A]">
-                  Learn more about
-                </p>
-
-                <p className="mt-2 font-heading text-2xl font-bold text-[#173F5F]">
-                  OXAR History
-                </p>
+                <span className="h-px w-16 bg-[#B89A5A]/70" />
 
               </div>
 
+            </div>
 
-              {/* -------------------------------------------------
-                  MOVING TYPOGRAPHY
-                  ------------------------------------------------- */}
 
-              <motion.div
-                style={{
-                  y: textY,
-                }}
-                className="relative w-full"
-              >
+            {/* =================================================
+                SVG IMAGE MASK
 
-                <div
-                  className="
-                    mx-auto
-                    w-full
-                    px-2
-                    text-center
-                    font-heading
-                    text-[15vw]
-                    font-black
-                    uppercase
-                    leading-[0.78]
-                    tracking-[-0.065em]
-                  "
-                  style={{
-                    backgroundImage: 'url("/IMG_8654.webp")',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
+                This is the important part.
 
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
+                The image is stationary.
 
-                    color: 'transparent',
-                    WebkitTextFillColor: 'transparent',
-                  }}
+                The text inside the mask moves.
+
+                Therefore the photograph appears to remain
+                fixed while the letters travel over it.
+                ================================================= */}
+
+            <svg
+              viewBox="0 0 1000 700"
+              preserveAspectRatio="xMidYMid slice"
+              className="
+                absolute
+                inset-0
+                z-10
+                h-full
+                w-full
+              "
+              xmlns="http://www.w3.org/2000/svg"
+            >
+
+              {/* ---------------------------------------------
+                  MASK DEFINITION
+                  --------------------------------------------- */}
+
+              <defs>
+
+                <mask
+                  id="oxarHeritageTextMask"
+                  x="0"
+                  y="0"
+                  width="1000"
+                  height="700"
+                  maskUnits="userSpaceOnUse"
                 >
 
-                  <span className="block">
-                    XAVIERIAN
-                  </span>
+                  {/* Black = hidden */}
 
-                  <span className="block">
-                    HERITAGE
-                  </span>
-
-                  <span className="block">
-                    OXAR
-                  </span>
-
-                </div>
-
-              </motion.div>
-
-
-              {/* -------------------------------------------------
-                  DESCRIPTION
-                  ------------------------------------------------- */}
-
-              <div className="mt-12 max-w-xl px-6 text-center">
-
-                <p className="font-body text-sm leading-6 text-[#46545D] md:text-base">
-                  A community shaped by shared classrooms,
-                  lasting friendships and a legacy that continues
-                  across generations.
-                </p>
-
-
-                {/* CTA */}
-
-                <Link
-                  to="/about"
-                  className="
-                    group
-                    mt-7
-                    inline-flex
-                    items-center
-                    gap-3
-                    border-b
-                    border-[#173F5F]
-                    pb-1.5
-                    font-body
-                    text-[10px]
-                    font-semibold
-                    uppercase
-                    tracking-[0.25em]
-                    text-[#173F5F]
-                    transition-all
-                    duration-300
-                    hover:border-[#B89A5A]
-                    hover:text-[#B89A5A]
-                  "
-                >
-
-                  Discover our history
-
-                  <ArrowRight
-                    className="
-                      h-3.5
-                      w-3.5
-                      transition-transform
-                      duration-300
-                      group-hover:translate-x-1.5
-                    "
+                  <rect
+                    x="0"
+                    y="0"
+                    width="1000"
+                    height="700"
+                    fill="black"
                   />
 
-                </Link>
+                  {/* -----------------------------------------
+                      MOVING WHITE TEXT
 
-              </div>
+                      White reveals the image underneath.
+                      ----------------------------------------- */}
+
+                  <motion.g
+                    style={{
+                      y: heritageTextY,
+                    }}
+                  >
+
+                    <text
+                      x="500"
+                      y="340"
+                      textAnchor="middle"
+                      fill="white"
+                      fontFamily="'Times New Roman', Times, serif"
+                      fontSize="145"
+                      fontWeight="900"
+                      letterSpacing="-5"
+                    >
+                      XAVIERIAN
+                    </text>
+
+                    <text
+                      x="500"
+                      y="475"
+                      textAnchor="middle"
+                      fill="white"
+                      fontFamily="'Times New Roman', Times, serif"
+                      fontSize="145"
+                      fontWeight="900"
+                      letterSpacing="-5"
+                    >
+                      HERITAGE
+                    </text>
+
+                    <text
+                      x="500"
+                      y="610"
+                      textAnchor="middle"
+                      fill="white"
+                      fontFamily="'Times New Roman', Times, serif"
+                      fontSize="145"
+                      fontWeight="900"
+                      letterSpacing="-5"
+                    >
+                      OXAR
+                    </text>
+
+                  </motion.g>
+
+                </mask>
+
+              </defs>
+
+
+              {/* =================================================
+                  IMAGE INSIDE MASK
+
+                  This image is stationary because it is NOT
+                  inside the moving motion.g.
+                  ================================================= */}
+
+              <image
+                href="https://raw.githubusercontent.com/oxaralumni/oxaralumni/main/client/public/IMG_8654.webp"
+                x="0"
+                y="0"
+                width="1000"
+                height="700"
+                preserveAspectRatio="xMidYMid slice"
+                mask="url(#oxarHeritageTextMask)"
+              />
+
+            </svg>
+
+
+            {/* =================================================
+                DESCRIPTION + CTA
+                ================================================= */}
+
+            <div
+              className="
+                absolute
+                bottom-[8%]
+                left-1/2
+                z-20
+                w-full
+                max-w-xl
+                -translate-x-1/2
+                px-6
+                text-center
+              "
+            >
+
+              <p
+                className="
+                  font-body
+                  text-sm
+                  leading-7
+                  text-[#46545D]
+                  md:text-base
+                "
+              >
+                A community shaped by shared classrooms,
+                lasting friendships and a legacy that continues
+                across generations.
+              </p>
+
+
+              <Link
+                to="/about"
+                className="
+                  group
+                  mt-7
+                  inline-flex
+                  items-center
+                  gap-3
+                  border-b
+                  border-[#173F5F]
+                  pb-2
+                  font-body
+                  text-[10px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.25em]
+                  text-[#173F5F]
+                  transition-all
+                  duration-300
+                  hover:border-[#B89A5A]
+                  hover:text-[#B89A5A]
+                "
+              >
+
+                <span>
+                  Discover our history
+                </span>
+
+                <ArrowRight
+                  className="
+                    h-3.5
+                    w-3.5
+                    transition-transform
+                    duration-300
+                    group-hover:translate-x-1.5
+                  "
+                />
+
+              </Link>
 
             </div>
 
@@ -420,7 +589,16 @@ export default function Home() {
 
           <Link
             to="/news"
-            className="flex items-center font-body text-sm font-semibold text-secondary transition-colors hover:text-secondary-dark"
+            className="
+              flex
+              items-center
+              font-body
+              text-sm
+              font-semibold
+              text-secondary
+              transition-colors
+              hover:text-secondary-dark
+            "
           >
 
             <span>
@@ -452,7 +630,7 @@ export default function Home() {
                 bg-white
                 shadow-sm
                 transition-all
-                duration-250
+                duration-300
                 hover:shadow-md
               "
             >
@@ -466,30 +644,74 @@ export default function Home() {
 
               <div className="flex flex-grow flex-col p-6">
 
-                <span className="mb-2 text-xs font-semibold uppercase tracking-wider text-secondary">
+                <span
+                  className="
+                    mb-2
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-secondary
+                  "
+                >
                   {post.category}
                 </span>
 
 
-                <h3 className="mb-2 line-clamp-2 font-heading text-lg font-bold text-primary">
+                <h3
+                  className="
+                    mb-2
+                    line-clamp-2
+                    font-heading
+                    text-lg
+                    font-bold
+                    text-primary
+                  "
+                >
                   {post.title}
                 </h3>
 
 
-                <p className="mb-4 line-clamp-3 font-body text-sm text-gray-500">
+                <p
+                  className="
+                    mb-4
+                    line-clamp-3
+                    font-body
+                    text-sm
+                    text-gray-500
+                  "
+                >
                   {post.excerpt}
                 </p>
 
 
-                <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
+                <div
+                  className="
+                    mt-auto
+                    flex
+                    items-center
+                    justify-between
+                    border-t
+                    border-gray-100
+                    pt-4
+                  "
+                >
 
                   <span className="text-xs text-gray-400">
                     {post.created_at}
                   </span>
 
+
                   <Link
                     to="/news"
-                    className="font-body text-sm font-semibold text-primary transition-colors hover:text-primary-dark"
+                    className="
+                      font-body
+                      text-sm
+                      font-semibold
+                      text-primary
+                      transition-colors
+                      hover:text-primary-dark
+                    "
                   >
                     Read More
                   </Link>
