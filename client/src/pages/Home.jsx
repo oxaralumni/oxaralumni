@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Award, BookOpen } from 'lucide-react'
 import { supabase } from '../supabaseClient'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
 
 export default function Home() {
   const [recentNews, setRecentNews] = useState([])
@@ -24,6 +24,22 @@ export default function Home() {
     [0, 1],
     ['80px', '-260px']
   )
+
+  // The text block travels 340px total (80px -> -260px). We shift the
+  // background image the opposite way by the same amount so that, once
+  // the text's own upward transform is applied, the image ends up
+  // visually anchored in place — i.e. it *looks* fixed to the viewport,
+  // without actually using `background-attachment: fixed`.
+  //
+  // `background-attachment: fixed` breaks the moment it sits on an
+  // element that also has a CSS transform (which is exactly what
+  // Framer Motion's `y` is) — most browsers silently stop painting the
+  // fixed background at all once a transform is present, which is why
+  // the text was showing up with no image behind it. This approach
+  // never touches `fixed`, so it works consistently on desktop, mobile
+  // Safari, and Android Chrome.
+  const bgShiftY = useTransform(scrollYProgress, [0, 1], [0, 340])
+  const heritageBackgroundPosition = useMotionTemplate`center calc(50% + ${bgShiftY}px)`
 
   // =========================================================
   // FETCH NEWS
@@ -283,19 +299,23 @@ export default function Home() {
                      * Because it is a background of the text,
                      * it is visible only inside the letters.
                      */
-                    backgroundImage: 'url("/IMG_8654.webp")',
+                    backgroundImage: 'url("https://github.com/oxaralumni/oxaralumni/blob/main/client/public/IMG_8654.webp")',
 
                     backgroundSize: 'cover',
 
-                    backgroundPosition: 'center center',
+                    /*
+                     * Counter-shifted so the image reads as
+                     * "pinned to the viewport" as the text
+                     * scrolls over it — see bgShiftY above.
+                     * (Deliberately NOT background-attachment:
+                     * fixed — that combo silently stops
+                     * painting on an element that also has a
+                     * transform, which is what made the image
+                     * disappear before.)
+                     */
+                    backgroundPosition: heritageBackgroundPosition,
 
                     backgroundRepeat: 'no-repeat',
-
-                    /*
-                     * Keeps the photograph visually fixed
-                     * while the typography moves.
-                     */
-                    backgroundAttachment: 'fixed',
 
                     /*
                      * Clip image to the text.
