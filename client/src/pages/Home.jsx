@@ -2,44 +2,20 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Award, BookOpen } from 'lucide-react'
 import { supabase } from '../supabaseClient'
-import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 export default function Home() {
   const [recentNews, setRecentNews] = useState([])
+  const heritageSectionRef = useRef(null)
 
-  // =========================================================
-  // OXAR HERITAGE SCROLL ANIMATION
-  // =========================================================
-
-  const heritageRef = useRef(null)
-
+  // Natural scroll transform (no sticky dead-scroll)
   const { scrollYProgress } = useScroll({
-    target: heritageRef,
-    offset: ['start start', 'end end'],
+    target: heritageSectionRef,
+    offset: ['start end', 'end start'],
   })
 
-  // Text moves upward as the user scrolls
-  const textY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ['80px', '-260px']
-  )
-
-  // The text block travels 340px total (80px -> -260px). We shift the
-  // background image the opposite way by the same amount so that, once
-  // the text's own upward transform is applied, the image ends up
-  // visually anchored in place — i.e. it *looks* fixed to the viewport,
-  // without actually using `background-attachment: fixed`.
-  //
-  // `background-attachment: fixed` breaks the moment it sits on an
-  // element that also has a CSS transform (which is exactly what
-  // Framer Motion's `y` is) — most browsers silently stop painting the
-  // fixed background at all once a transform is present, which is why
-  // the text was showing up with no image behind it. This approach
-  // never touches `fixed`, so it works consistently on desktop, mobile
-  // Safari, and Android Chrome.
-  const bgShiftY = useTransform(scrollYProgress, [0, 1], [0, 340])
-  const heritageBackgroundPosition = useMotionTemplate`center calc(50% + ${bgShiftY}px)`
+  const xScrollTop = useTransform(scrollYProgress, [0, 1], ['10%', '-15%'])
+  const xScrollBottom = useTransform(scrollYProgress, [0, 1], ['-15%', '10%'])
 
   // =========================================================
   // FETCH NEWS
@@ -93,7 +69,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-white">
 
       {/* =====================================================
           HERO SECTION
@@ -225,213 +201,156 @@ export default function Home() {
 
 
       {/* =====================================================
-          OXAR HERITAGE
-          
-          IMAGE FIXED BEHIND TEXT
-          TEXT MOVES WITH SCROLL
-          IMAGE IS VISIBLE ONLY INSIDE LETTERS
+          OXAR HERITAGE (PAPER CUTOUT EFFECT - B-EGG.FARM STYLE)
           ===================================================== */}
 
       <section
-        ref={heritageRef}
-        className="relative bg-[#FCFBF7]"
+        ref={heritageSectionRef}
+        className="relative w-full overflow-hidden bg-white py-16 sm:py-20"
       >
 
-        {/* Large scroll area */}
-        <div className="relative h-[220vh]">
+        {/* 1. FIXED BACKGROUND IMAGE */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: 'url("/IMG_8654.webp")',
+            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center center',
+            filter: 'contrast(1.08) brightness(0.92)',
+          }}
+        />
 
-          {/* Sticky viewport */}
-          <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-[#FCFBF7]">
+        {/* 2. SVG PURE WHITE PAPER CUTOUT STENCIL */}
+        <svg
+          className="absolute inset-0 h-full w-full pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <mask id="xaverian-cutout-stencil">
+              {/* Solid White Rect = Solid Paper Overlay */}
+              <rect width="100%" height="100%" fill="#ffffff" />
 
-            {/* =================================================
-                MAIN CONTENT
-                ================================================= */}
+              {/* Black Text = Transparent Cutouts revealing the fixed image */}
+              <foreignObject width="100%" height="100%">
+                <div className="flex h-full w-full flex-col justify-center items-center gap-0 sm:gap-2 px-2 text-black select-none">
+                  <motion.div
+                    style={{ x: xScrollTop }}
+                    className="whitespace-nowrap font-heading text-[16vw] sm:text-[13vw] font-black uppercase leading-[0.8] tracking-tighter text-center"
+                  >
+                    XAVERIAN
+                  </motion.div>
+                  <motion.div
+                    style={{ x: xScrollBottom }}
+                    className="whitespace-nowrap font-heading text-[16vw] sm:text-[13vw] font-black uppercase leading-[0.8] tracking-tighter text-center"
+                  >
+                    ALWAYS
+                  </motion.div>
+                </div>
+              </foreignObject>
+            </mask>
+          </defs>
 
-            <div className="relative z-10 flex w-full flex-col items-center justify-center">
+          {/* White Paper Overlay with Cutout Mask */}
+          <rect
+            width="100%"
+            height="100%"
+            fill="#ffffff"
+            mask="url(#xaverian-cutout-stencil)"
+          />
+        </svg>
 
-              {/* -------------------------------------------------
-                  SECTION LABEL
-                  ------------------------------------------------- */}
+        {/* 3. FOREGROUND CONTENT */}
+        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-4 text-center pointer-events-auto">
 
-              <div className="mb-10 text-center">
+          {/* Section Header */}
+          <div className="mb-2">
+            <p className="font-body text-[11px] font-semibold uppercase tracking-[0.35em] text-[#B89A5A]">
+              Learn more about
+            </p>
+            <h2 className="mt-1 font-heading text-2xl sm:text-3xl font-bold text-[#173F5F]">
+              OXAR History
+            </h2>
+          </div>
 
-                <p
-                  className="
-                    font-body
-                    text-[10px]
-                    font-semibold
-                    uppercase
-                    tracking-[0.4em]
-                    text-[#B89A5A]
-                  "
-                >
-                  Learn more about
-                </p>
+          {/* Height spacer for cutout text */}
+          <div className="h-44 sm:h-60 w-full" />
 
-                <p
-                  className="
-                    mt-2
-                    font-heading
-                    text-2xl
-                    font-bold
-                    text-[#173F5F]
-                  "
-                >
-                  OXAR History
-                </p>
+          {/* Description & Button */}
+          <div className="mt-6 max-w-lg">
+            <p className="font-body text-sm sm:text-base leading-relaxed text-[#46545D]">
+              A community shaped by shared classrooms, lasting friendships, and a legacy that continues across generations.
+            </p>
 
-              </div>
-
-
-              {/* -------------------------------------------------
-                  IMAGE THROUGH TEXT
-                  ------------------------------------------------- */}
-
-              <div className="w-full overflow-hidden">
-
-                <motion.div
-                  style={{
-                    y: textY,
-
-                    /*
-                     * THE ACTUAL OXAR PHOTO
-                     *
-                     * Because it is a background of the text,
-                     * it is visible only inside the letters.
-                     */
-                    backgroundImage: 'url("/IMG_8654.webp")',
-
-                    backgroundSize: 'cover',
-
-                    /*
-                     * Counter-shifted so the image reads as
-                     * "pinned to the viewport" as the text
-                     * scrolls over it — see bgShiftY above.
-                     * (Deliberately NOT background-attachment:
-                     * fixed — that combo silently stops
-                     * painting on an element that also has a
-                     * transform, which is what made the image
-                     * disappear before.)
-                     */
-                    backgroundPosition: heritageBackgroundPosition,
-
-                    backgroundRepeat: 'no-repeat',
-
-                    /*
-                     * Clip image to the text.
-                     */
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-
-                    /*
-                     * Make original text transparent.
-                     */
-                    color: 'transparent',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-
-                  className="
-                    mx-auto
-                    w-full
-                    text-center
-                    font-heading
-                    text-[15vw]
-                    font-black
-                    uppercase
-                    leading-[0.78]
-                    tracking-[-0.065em]
-                  "
-                >
-
-                  <span className="block">
-                    XAVIERIAN
-                  </span>
-
-                  <span className="block">
-                    HERITAGE
-                  </span>
-
-                  <span className="block">
-                    OXAR
-                  </span>
-
-                </motion.div>
-
-              </div>
-
-
-              {/* -------------------------------------------------
-                  DESCRIPTION
-                  ------------------------------------------------- */}
-
-              <div className="mt-12 max-w-xl px-6 text-center">
-
-                <p
-                  className="
-                    font-body
-                    text-sm
-                    leading-6
-                    text-[#46545D]
-                    md:text-base
-                  "
-                >
-                  A community shaped by shared classrooms,
-                  lasting friendships and a legacy that continues
-                  across generations.
-                </p>
-
-
-                {/* -------------------------------------------------
-                    CTA
-                    ------------------------------------------------- */}
-
-                <Link
-                  to="/about"
-                  className="
-                    group
-                    mt-7
-                    inline-flex
-                    items-center
-                    gap-3
-                    border-b
-                    border-[#173F5F]
-                    pb-1.5
-                    font-body
-                    text-[10px]
-                    font-semibold
-                    uppercase
-                    tracking-[0.25em]
-                    text-[#173F5F]
-                    transition-all
-                    duration-300
-                    hover:border-[#B89A5A]
-                    hover:text-[#B89A5A]
-                  "
-                >
-
-                  Discover our history
-
-                  <ArrowRight
-                    className="
-                      h-3.5
-                      w-3.5
-                      transition-transform
-                      duration-300
-                      group-hover:translate-x-1.5
-                    "
-                  />
-
-                </Link>
-
-              </div>
-
-            </div>
-
+            <Link
+              to="/about"
+              className="group mt-6 inline-flex items-center gap-2.5 border-b-2 border-[#173F5F] pb-1 font-body text-xs font-bold uppercase tracking-[0.2em] text-[#173F5F] transition-all duration-300 hover:border-[#B89A5A] hover:text-[#B89A5A]"
+            >
+              Discover our history
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+            </Link>
           </div>
 
         </div>
 
       </section>
+
+
+      {/* =====================================================
+          CONTINUOUS CUTOUT MARQUEE BANNER (B-EGG.FARM TICKER)
+          ===================================================== */}
+
+      <div className="relative w-full h-[160px] sm:h-[190px] overflow-hidden select-none bg-white">
+        {/* Fixed image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: 'url("/IMG_8654.webp")',
+            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center center',
+            filter: 'contrast(1.08) brightness(0.92)',
+          }}
+        />
+
+        {/* White cutout mask with continuous marquee ticker */}
+        <svg
+          className="absolute inset-0 h-full w-full pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <mask id="marquee-cutout-mask">
+              <rect width="100%" height="100%" fill="#ffffff" />
+              <foreignObject width="100%" height="100%">
+                <div className="flex h-full w-full items-center whitespace-nowrap overflow-hidden">
+                  <motion.div
+                    className="flex whitespace-nowrap font-heading text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-black"
+                    animate={{ x: ['0%', '-50%'] }}
+                    transition={{
+                      repeat: Infinity,
+                      ease: 'linear',
+                      duration: 22,
+                    }}
+                  >
+                    <span className="pr-4">
+                      XAVERIAN ALWAYS • CONNECTING GENERATIONS • OXAR HERITAGE • EXCELLENCE •&nbsp;
+                    </span>
+                    <span className="pr-4">
+                      XAVERIAN ALWAYS • CONNECTING GENERATIONS • OXAR HERITAGE • EXCELLENCE •&nbsp;
+                    </span>
+                  </motion.div>
+                </div>
+              </foreignObject>
+            </mask>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            fill="#ffffff"
+            mask="url(#marquee-cutout-mask)"
+          />
+        </svg>
+      </div>
 
 
       {/* =====================================================
