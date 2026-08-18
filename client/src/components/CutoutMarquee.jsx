@@ -1,59 +1,78 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
+/**
+ * CutoutMarquee
+ * 
+ * A pure white paper cutout marquee banner where moving text is cut out like a stencil,
+ * revealing the fixed background image underneath (inspired by b-egg.farm).
+ */
 export default function CutoutMarquee({
-  text = 'OXAR ALUMNI • EXCELLENCE IN HERITAGE • ST. XAVIER • CONNECTING GENERATIONS •',
+  text = 'XAVERIAN ALWAYS • CONNECTING GENERATIONS • OXAR HERITAGE • EXCELLENCE •',
   imageUrl = '/IMG_8654.webp',
-  paperColor = '#FCFBF7', // Matches your website's cream background
-  height = '320px',
-  speed = 25, // seconds per full cycle
+  paperColor = '#ffffff',
+  height = '200px',
+  speed = 25,
+  reverse = false,
+  className = '',
 }) {
-  const repeatedText = `${text} ${text} `
+  const phrase = `${text.trim()} `
+  const repeatedText = phrase.repeat(4)
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ height }}>
-      {/* 1. FIXED/STICKY BACKGROUND IMAGE UNDERNEATH */}
+    <div
+      className={`relative w-full overflow-hidden select-none bg-white ${className}`}
+      style={{ height }}
+    >
+      {/* 1. FIXED BACKGROUND IMAGE */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: `url("${imageUrl}")` }}
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url("${imageUrl}")`,
+          backgroundAttachment: 'fixed',
+          backgroundPosition: 'center center',
+          filter: 'contrast(1.08) brightness(0.92)',
+        }}
       />
 
-      {/* 2. SVG CUTOUT STENCIL LAYER ON TOP */}
+      {/* 2. SVG WHITE CUTOUT OVERLAY */}
       <svg
         className="absolute inset-0 h-full w-full pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
       >
         <defs>
-          <mask id="paper-cutout-marquee">
-            {/* White keeps the paper background opaque */}
+          <mask id={`cutout-marquee-${reverse ? 'rev' : 'fwd'}`}>
+            {/* White background keeps surrounding area solid white */}
             <rect width="100%" height="100%" fill="#ffffff" />
 
-            {/* Black punches transparent letter cutouts */}
+            {/* Black text punches transparent cutouts */}
             <foreignObject width="100%" height="100%">
               <div className="flex h-full w-full items-center whitespace-nowrap overflow-hidden">
                 <motion.div
-                  className="flex whitespace-nowrap font-heading text-[12vw] sm:text-[8vw] font-black uppercase tracking-tight text-black select-none"
-                  animate={{ x: ['0%', '-50%'] }}
+                  className="flex whitespace-nowrap font-heading text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-black"
+                  initial={{ x: reverse ? '-50%' : '0%' }}
+                  animate={{ x: reverse ? '0%' : '-50%' }}
                   transition={{
                     repeat: Infinity,
                     ease: 'linear',
                     duration: speed,
                   }}
                 >
-                  <span>{repeatedText}</span>
-                  <span>{repeatedText}</span>
+                  <span className="pr-4">{repeatedText}</span>
+                  <span className="pr-4">{repeatedText}</span>
                 </motion.div>
               </div>
             </foreignObject>
           </mask>
         </defs>
 
-        {/* The solid paper overlay that uses the mask */}
+        {/* Paper overlay rect */}
         <rect
           width="100%"
           height="100%"
           fill={paperColor}
-          mask="url(#paper-cutout-marquee)"
+          mask={`url(#cutout-marquee-${reverse ? 'rev' : 'fwd'})`}
         />
       </svg>
     </div>
