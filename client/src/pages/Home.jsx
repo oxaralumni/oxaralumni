@@ -8,15 +8,15 @@ export default function Home() {
   const [recentNews, setRecentNews] = useState([])
   const heritageRef = useRef(null)
 
-  // Fluid scroll tracking across the section without sticky locking
+  // Fluid scroll tracking across the cutout section
   const { scrollYProgress } = useScroll({
     target: heritageRef,
     offset: ['start end', 'end start'],
   })
 
-  // Horizontal motion responding to scroll
-  const x1 = useTransform(scrollYProgress, [0, 1], ['5%', '-10%'])
-  const x2 = useTransform(scrollYProgress, [0, 1], ['-10%', '5%'])
+  // Horizontal parallax motion on scroll
+  const x1 = useTransform(scrollYProgress, [0, 1], [-80, 80])
+  const x2 = useTransform(scrollYProgress, [0, 1], [80, -80])
 
   // =========================================================
   // FETCH NEWS
@@ -202,96 +202,126 @@ export default function Home() {
 
 
       {/* =====================================================
-          OXAR HERITAGE (PAPER CUTOUT / UNDERNEATH FIXED IMAGE)
+          OXAR HERITAGE (TRUE PAPER CUTOUT - XAVERIAN ALWAYS)
           ===================================================== */}
 
       <section
         ref={heritageRef}
-        className="relative w-full overflow-hidden bg-white py-16 sm:py-24"
+        className="relative w-full overflow-hidden bg-white pt-12 pb-16 sm:pt-16 sm:pb-24"
       >
 
-        {/* Section Header */}
-        <div className="mb-8 text-center">
-          <p className="font-body text-[11px] font-semibold uppercase tracking-[0.35em] text-[#B89A5A]">
-            Learn more about
-          </p>
-          <h2 className="mt-1 font-heading text-2xl sm:text-3xl font-bold text-[#173F5F]">
-            OXAR History
-          </h2>
+        {/* NATIVE SVG CUTOUT STENCIL */}
+        <div className="w-full max-w-7xl mx-auto px-2 sm:px-4">
+          <svg
+            viewBox="0 0 1600 620"
+            className="w-full h-auto select-none pointer-events-none"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              <mask id="xaverian-cutout-mask">
+                {/* 1. White Background = Solid White Paper */}
+                <rect width="100%" height="100%" fill="#ffffff" />
+
+                {/* 2. Black Text = Cutout Windows punching through to the photo */}
+                <motion.text
+                  x="800"
+                  y="200"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fill="#000000"
+                  fontSize="220"
+                  fontWeight="900"
+                  letterSpacing="-0.04em"
+                  className="font-heading"
+                  style={{ x: x1 }}
+                >
+                  XAVERIAN
+                </motion.text>
+
+                <motion.text
+                  x="800"
+                  y="440"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fill="#000000"
+                  fontSize="220"
+                  fontWeight="900"
+                  letterSpacing="-0.04em"
+                  className="font-heading"
+                  style={{ x: x2 }}
+                >
+                  ALWAYS
+                </motion.text>
+              </mask>
+            </defs>
+
+            {/* FIXED BACKGROUND IMAGE SITTING UNDERNEATH */}
+            <image
+              href="/IMG_8654.webp"
+              width="100%"
+              height="100%"
+              preserveAspectRatio="xMidYMid slice"
+            />
+
+            {/* WHITE PAPER LAYER ON TOP WITH CUTOUT MASK */}
+            <rect
+              width="100%"
+              height="100%"
+              fill="#ffffff"
+              mask="url(#xaverian-cutout-mask)"
+            />
+          </svg>
         </div>
 
-        {/* BOLD CUTOUT TEXT REVEALING FIXED PHOTO UNDERNEATH */}
-        <div className="w-full overflow-hidden select-none py-4 text-center">
-
-          <motion.div
-            style={{
-              x: x1,
-              backgroundImage: 'url("/IMG_8654.webp")',
-              backgroundAttachment: 'fixed',
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              color: 'transparent',
-            }}
-            className="whitespace-nowrap font-heading text-[16vw] sm:text-[13vw] font-black uppercase leading-[0.82] tracking-[-0.05em]"
+        {/* CONTINUOUS ROLLING CUTOUT MARQUEE TICKER */}
+        <div className="w-full mt-4 overflow-hidden">
+          <svg
+            viewBox="0 0 1600 130"
+            className="w-full h-24 sm:h-32 select-none pointer-events-none"
+            preserveAspectRatio="xMidYMid slice"
           >
-            XAVERIAN
-          </motion.div>
+            <defs>
+              <mask id="marquee-stencil-mask">
+                <rect width="100%" height="100%" fill="#ffffff" />
+                <motion.text
+                  y="65"
+                  dominantBaseline="central"
+                  fill="#000000"
+                  fontSize="82"
+                  fontWeight="900"
+                  letterSpacing="-0.02em"
+                  className="font-heading"
+                  animate={{ x: [0, -1800] }}
+                  transition={{
+                    repeat: Infinity,
+                    ease: 'linear',
+                    duration: 22,
+                  }}
+                >
+                  XAVERIAN ALWAYS • CONNECTING GENERATIONS • OXAR HERITAGE • EXCELLENCE • XAVERIAN ALWAYS • CONNECTING GENERATIONS • OXAR HERITAGE • EXCELLENCE •&nbsp;
+                </motion.text>
+              </mask>
+            </defs>
 
-          <motion.div
-            style={{
-              x: x2,
-              backgroundImage: 'url("/IMG_8654.webp")',
-              backgroundAttachment: 'fixed',
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              color: 'transparent',
-            }}
-            className="whitespace-nowrap font-heading text-[16vw] sm:text-[13vw] font-black uppercase leading-[0.82] tracking-[-0.05em]"
-          >
-            ALWAYS
-          </motion.div>
+            {/* Fixed Background Image underneath ticker */}
+            <image
+              href="/IMG_8654.webp"
+              width="100%"
+              height="100%"
+              preserveAspectRatio="xMidYMid slice"
+            />
 
+            {/* White Paper Mask */}
+            <rect
+              width="100%"
+              height="100%"
+              fill="#ffffff"
+              mask="url(#marquee-stencil-mask)"
+            />
+          </svg>
         </div>
 
-        {/* CONTINUOUS MARQUEE CUTOUT TICKER (B-EGG.FARM STYLE) */}
-        <div className="mt-6 w-full overflow-hidden select-none py-2">
-          <motion.div
-            className="flex whitespace-nowrap font-heading text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight"
-            style={{
-              backgroundImage: 'url("/IMG_8654.webp")',
-              backgroundAttachment: 'fixed',
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              color: 'transparent',
-            }}
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{
-              repeat: Infinity,
-              ease: 'linear',
-              duration: 25,
-            }}
-          >
-            <span className="pr-4">
-              XAVERIAN ALWAYS • CONNECTING GENERATIONS • OXAR HERITAGE • EXCELLENCE •&nbsp;
-            </span>
-            <span className="pr-4">
-              XAVERIAN ALWAYS • CONNECTING GENERATIONS • OXAR HERITAGE • EXCELLENCE •&nbsp;
-            </span>
-          </motion.div>
-        </div>
-
-        {/* Section Description and CTA */}
+        {/* Section Description & CTA */}
         <div className="mx-auto mt-12 max-w-xl px-6 text-center">
           <p className="font-body text-sm sm:text-base leading-relaxed text-[#46545D]">
             A community shaped by shared classrooms, lasting friendships, and a legacy that continues across generations.
