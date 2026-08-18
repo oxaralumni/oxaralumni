@@ -299,7 +299,7 @@ export default function Home() {
                      * Because it is a background of the text,
                      * it is visible only inside the letters.
                      */
-                    backgroundImage: 'url("https://github.com/oxaralumni/oxaralumni/blob/main/client/public/IMG_8654.webp")',
+                    backgroundImage: 'url("/IMG_8654.webp")',
 
                     backgroundSize: 'cover',
 
